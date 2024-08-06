@@ -15,64 +15,80 @@ import java.awt.event.MouseEvent;
  */
 public class ColorTileGame extends JPanel {
 
-    public ColorTileGame() {
-        addMouseListener(new MouseAdapter() {
+  // public class GridDrawer extends JPanel {
+  private static final int numRows = 25;
+  private static final int numCols = 25;
+  private static final int blockSize = 16; // Assuming upload image icon size is 16x16 pixels
+  private Color[][] gridColors;
 
-            @Override
-            public void mouseClicked(MouseEvent me) {
+  public ColorTileGame() {
+    addMouseListener(new MouseAdapter() {
 
-                System.out.println("IN MOUSE CLICKED!");
+      @Override
+      public void mouseClicked(MouseEvent me) {
 
-                int clickedX = me.getX();
-                int clickedY = me.getY();
+        System.out.println("IN MOUSE CLICKED!");
 
-                // Calculate row and column indices based on the block size
-                int rowIndex = clickedY / blockSize;
-                int columnIndex = clickedX / blockSize;
+        int clickedX = me.getX();
+        int clickedY = me.getY();
 
-                System.out.println("tile coordinates: " + rowIndex + ", " + columnIndex);
+        // Calculate row and column indices based on the block size
+        int rowIndex = clickedY / blockSize;
+        int columnIndex = clickedX / blockSize;
 
-            }
-        });
+        System.out.println("tile coordinates: " + rowIndex + ", " + columnIndex);
+      }
+    });
+
+    // Initialize gridColors with random colors
+    gridColors = new Color[numRows][numCols];
+    for (int i = 0; i < numRows; i++) {
+      for (int j = 0; j < numCols; j++) {
+        gridColors[i][j] = new Color((int) (Math.random() * 256),
+                (int) (Math.random() * 256),
+                (int) (Math.random() * 256));
+      }
     }
-// public class GridDrawer extends JPanel {
-    private static final int numRows = 25;
-    private static final int numCols = 25;
-    private static final int blockSize = 16; // Assuming upload image icon size is 16x16 pixels
+  }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+  @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
 
-        // Draw horizontal lines
-        for (int i = 0; i <= numRows; i++) {
-            g.drawLine(0, i * blockSize, numCols * blockSize, i * blockSize);
+    // Draw horizontal lines
+    for (int i = 0; i <= numRows; i++) {
+        g.drawLine(0, i * blockSize, numCols * blockSize, i * blockSize);
+    }
 
-            // Draw vertical lines
-            for (int j = 0; j <= numCols; j++) {
-                Color randomColor = new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
-                g.setColor(randomColor);
-                g.drawLine(j * blockSize, 0, j * blockSize, numRows * blockSize);
-                g.fillRect(j * blockSize, i * blockSize, blockSize, blockSize);
-            }
+    // Draw vertical lines
+    for (int j = 0; j <= numCols; j++) {
+        g.drawLine(j * blockSize, 0, j * blockSize, numRows * blockSize);
+    }
+
+    // Draw filled rectangles with colors from gridColors
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < numCols; j++) {
+            g.setColor(gridColors[i][j]);
+            g.fillRect(j * blockSize, i * blockSize, blockSize, blockSize);
         }
-
-        System.out.println("LEAVING PAINT");
     }
 
-    public static void main(String[] args) {
+    System.out.println("LEAVING PAINT");
+  }
 
-        SwingUtilities.invokeLater(() -> {
+  public static void main(String[] args) {
 
-            System.out.println("EDT: " + SwingUtilities.isEventDispatchThread());
+    SwingUtilities.invokeLater(() -> {
 
-            JFrame frame = new JFrame("Grid");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            ColorTileGame grid = new ColorTileGame();
-            frame.add(grid);
-            frame.setSize(numCols * blockSize, numRows * blockSize); // Add some padding
-            frame.setVisible(true);
-        });
+      System.out.println("EDT: " + SwingUtilities.isEventDispatchThread());
 
-    }
+      JFrame frame = new JFrame("Grid");
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      ColorTileGame grid = new ColorTileGame();
+      frame.add(grid);
+      frame.setSize(numCols * blockSize, numRows * blockSize); // Add some padding
+      frame.setVisible(true);
+    });
+
+  }
 }
