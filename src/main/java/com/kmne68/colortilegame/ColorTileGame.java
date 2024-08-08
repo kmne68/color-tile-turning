@@ -85,10 +85,16 @@ public class ColorTileGame extends JPanel {
       JFrame frame = new JFrame("Grid");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       ColorTileGame grid = new ColorTileGame();
+      
+      // Calculate the panel size
+      int panelWidth = numCols * blockSize;
+      int panelHeight = numRows * blockSize;
+      grid.setPreferredSize(new Dimension(panelWidth, panelHeight));
+      
       frame.add(grid);
-      frame.setSize(numCols * blockSize, numRows * blockSize); // Add some padding
+      frame.pack();
+//      frame.setSize(numCols * blockSize, numRows * blockSize); // Add some padding
       frame.setVisible(true);
     });
-
   }
 }
