@@ -3,6 +3,7 @@
  */
 package com.kmne68.colortilegame;
 
+import com.kmne68.utils.ColorDialog;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
@@ -22,6 +23,17 @@ public class ColorTileGame extends JPanel {
   private Color[][] gridColors;
 
   public ColorTileGame() {
+    
+    // Initialize gridColors with random colors
+    gridColors = new Color[numRows][numCols];
+    for (int i = 0; i < numRows; i++) {
+      for (int j = 0; j < numCols; j++) {
+        gridColors[i][j] = new Color((int) (Math.random() * 256),
+                (int) (Math.random() * 256),
+                (int) (Math.random() * 256));
+      }
+    }
+    
     addMouseListener(new MouseAdapter() {
 
       @Override
@@ -37,18 +49,23 @@ public class ColorTileGame extends JPanel {
         int columnIndex = clickedX / blockSize;
 
         System.out.println("tile coordinates: " + rowIndex + ", " + columnIndex);
+        System.out.println("RGB: " + gridColors[rowIndex][columnIndex]);
+        System.out.println("Red: " + (gridColors[rowIndex][columnIndex]).getRed());
+        System.out.println("Green: " + (gridColors[rowIndex][columnIndex]).getGreen());
+        System.out.println("Blue: " + (gridColors[rowIndex][columnIndex]).getBlue());
+        
+        ColorDialog colorDialog = new ColorDialog(null, gridColors[rowIndex][columnIndex]);
+        colorDialog.setVisible(true);
+        
+        // Get the new color from the dialog
+        Color newColor = colorDialog.getNewColor();
+        
+        gridColors[rowIndex][columnIndex] = newColor;
+        
+        repaint();
       }
     });
 
-    // Initialize gridColors with random colors
-    gridColors = new Color[numRows][numCols];
-    for (int i = 0; i < numRows; i++) {
-      for (int j = 0; j < numCols; j++) {
-        gridColors[i][j] = new Color((int) (Math.random() * 256),
-                (int) (Math.random() * 256),
-                (int) (Math.random() * 256));
-      }
-    }
   }
 
   @Override
