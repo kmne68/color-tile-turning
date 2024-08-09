@@ -5,13 +5,16 @@
 package com.kmne68.utils;
 
 import com.kmne68.colortilegame.ColorTileGame;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -30,6 +33,9 @@ public class ColorDialog extends JDialog {
     this.mainPanel = mainPanel;
     this.rowIndex = rowIndex;
     this.columnIndex = columnIndex;
+    
+    JPanel contentPanel = new JPanel(new GridLayout(3, 2));
+    contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
     
     // Create labels and spinners for RGB values
     redLabel = new JLabel("Red: ");
@@ -50,12 +56,18 @@ public class ColorDialog extends JDialog {
     
     // Layout components with a simple grid
     setLayout(new GridLayout(3, 2));
-    add(redLabel);
-    add(redSpinner);
-    add(greenLabel);
-    add(greenSpinner);
-    add(blueLabel);
-    add(blueSpinner);
+    contentPanel.add(redLabel);
+    contentPanel.add(redSpinner);
+    contentPanel.add(greenLabel);
+    contentPanel.add(greenSpinner);
+    contentPanel.add(blueLabel);
+    contentPanel.add(blueSpinner);
+    
+    // TODO: add color to the labels
+    // TODO: close the JPanel with one click
+    // TODO: add an OK button to update the colors and close the JPanel
+    
+    add(contentPanel);
     
     pack();
     setLocationRelativeTo(parent);
