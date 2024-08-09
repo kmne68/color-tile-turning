@@ -54,7 +54,7 @@ public class ColorTileGame extends JPanel {
         System.out.println("Green: " + (gridColors[rowIndex][columnIndex]).getGreen());
         System.out.println("Blue: " + (gridColors[rowIndex][columnIndex]).getBlue());
         
-        ColorDialog colorDialog = new ColorDialog(null, gridColors[rowIndex][columnIndex]);
+        ColorDialog colorDialog = new ColorDialog(null, gridColors[rowIndex][columnIndex], rowIndex, columnIndex, ColorTileGame.this);
         colorDialog.setVisible(true);
         
         // Get the new color from the dialog
@@ -92,6 +92,14 @@ public class ColorTileGame extends JPanel {
 
     System.out.println("LEAVING PAINT");
   }
+  
+  
+  public void updateGridColor(int rowIndex, int columnIndex, Color newColor) {
+    
+    gridColors[rowIndex][columnIndex] = newColor;
+    repaint(columnIndex * blockSize, rowIndex * blockSize, blockSize, blockSize);
+  }
+  
 
   public static void main(String[] args) {
 

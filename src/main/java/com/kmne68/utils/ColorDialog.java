@@ -4,6 +4,7 @@
  */
 package com.kmne68.utils;
 
+import com.kmne68.colortilegame.ColorTileGame;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JDialog;
@@ -18,11 +19,17 @@ import javax.swing.SpinnerNumberModel;
  */
 public class ColorDialog extends JDialog {
   
+  private final ColorTileGame mainPanel;
   private final JLabel redLabel, greenLabel, blueLabel;
   private final JSpinner redSpinner, greenSpinner, blueSpinner;
+  private final int rowIndex, columnIndex;
   
-  public ColorDialog(JFrame parent, Color color) {
+  public ColorDialog(JFrame parent, Color color, int rowIndex, int columnIndex, ColorTileGame mainPanel) {
     super(parent, "Color Information", ModalityType.APPLICATION_MODAL);
+    
+    this.mainPanel = mainPanel;
+    this.rowIndex = rowIndex;
+    this.columnIndex = columnIndex;
     
     // Create labels and spinners for RGB values
     redLabel = new JLabel("Red: ");
@@ -36,6 +43,10 @@ public class ColorDialog extends JDialog {
     redSpinner = new JSpinner(redModel);
     greenSpinner = new JSpinner(greenModel);
     blueSpinner = new JSpinner(blueModel);
+    
+    redSpinner.addChangeListener(e -> updateColor());
+    greenSpinner.addChangeListener(e -> updateColor());
+    blueSpinner.addChangeListener(e -> updateColor());
     
     // Layout components with a simple grid
     setLayout(new GridLayout(3, 2));
@@ -69,6 +80,11 @@ public class ColorDialog extends JDialog {
     int green = (int) greenSpinner.getValue();
     int blue = (int) blueSpinner.getValue();
     return new Color(red, green, blue);
+  }
+  
+  private void updateColor() {
+    Color newColor = new Color((int) redSpinner.getValue(), (int) greenSpinner.getValue(), (int) blueSpinner.getValue());
+    mainPanel.updateGridColor(rowIndex, columnIndex, newColor);
   }
   
 }
