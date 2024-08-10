@@ -5,9 +5,9 @@
 package com.kmne68.utils;
 
 import com.kmne68.colortilegame.ColorTileGame;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,19 +28,26 @@ public class ColorDialog extends JDialog {
   private final int rowIndex, columnIndex;
   
   public ColorDialog(JFrame parent, Color color, int rowIndex, int columnIndex, ColorTileGame mainPanel) {
-    super(parent, "Color Information", ModalityType.APPLICATION_MODAL);
+    super(parent, "Color Information", ModalityType.MODELESS);
+    // super(parent, "Color Information", ModalityType.APPLICATION_MODAL);
     
     this.mainPanel = mainPanel;
     this.rowIndex = rowIndex;
     this.columnIndex = columnIndex;
     
-    JPanel contentPanel = new JPanel(new GridLayout(3, 2));
+    
+    JPanel contentPanel = new JPanel(new GridLayout(5, 2));
     contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
     
     // Create labels and spinners for RGB values
     redLabel = new JLabel("Red: ");
+    redLabel.setForeground(Color.RED);
+    
     greenLabel = new JLabel("Green: ");
+    greenLabel.setForeground(Color.GREEN);
+    
     blueLabel = new JLabel("Blue: ");
+    blueLabel.setForeground(Color.BLUE);
     
     SpinnerNumberModel redModel = new SpinnerNumberModel(color.getRed(), 0, 255, 1);
     SpinnerNumberModel greenModel = new SpinnerNumberModel(color.getGreen(), 0, 255, 1);
@@ -53,6 +60,21 @@ public class ColorDialog extends JDialog {
     redSpinner.addChangeListener(e -> updateColor());
     greenSpinner.addChangeListener(e -> updateColor());
     blueSpinner.addChangeListener(e -> updateColor());
+        
+    // Crate a Cancel button
+    JButton cancelButton = new JButton("Cancel");
+    cancelButton.addActionListener(e -> {
+      setVisible(false);
+      dispose();
+    });
+    
+    // Create an OK button to close the dialog
+    JButton okButton = new JButton("OK");
+    okButton.addActionListener(e -> {
+      updateColor();
+      setVisible(false);
+      dispose();
+    });
     
     // Layout components with a simple grid
     setLayout(new GridLayout(3, 2));
@@ -62,16 +84,19 @@ public class ColorDialog extends JDialog {
     contentPanel.add(greenSpinner);
     contentPanel.add(blueLabel);
     contentPanel.add(blueSpinner);
+    contentPanel.add(new JPanel());
+    contentPanel.add(new JPanel());
+    contentPanel.add(cancelButton);
+    contentPanel.add(okButton);
     
     // TODO: add color to the labels
-    // TODO: close the JPanel with one click
-    // TODO: add an OK button to update the colors and close the JPanel
     
     add(contentPanel);
     
     pack();
     setLocationRelativeTo(parent);
     setVisible(true);
+    this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
   }
   
   // Getters for spinner values

@@ -58,10 +58,9 @@ public class ColorTileGame extends JPanel {
         colorDialog.setVisible(true);
         
         // Get the new color from the dialog
-        Color newColor = colorDialog.getNewColor();
+     //   Color newColor = colorDialog.getNewColor();
         
-        gridColors[rowIndex][columnIndex] = newColor;
-        
+     //   gridColors[rowIndex][columnIndex] = newColor;
         repaint();
       }
     });
