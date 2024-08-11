@@ -4,6 +4,8 @@
  */
 package com.kmne68.colortilegame;
 
+import java.awt.Color;
+
 /**
  *
  * @author kmne6
@@ -13,12 +15,24 @@ public class Player {
   private int FINAL = 256;
   
   private String name;
-  private int bucket;
+  private int score;
+  private Color targetColor;
+  private int remainingPoints;
 
-  private int[] adjustColor(int startRed, int startGreen, int startBlue) {
-    
-  //  int[] result = [0, 0, 0];
-    
-    return null;
+  public Player(String name, Color targetColor) {
+    this.name = name;
+    this.score = 0;
+    this.targetColor = targetColor;
+    this.remainingPoints = 255;
+  }
+  
+  
+  public void addPoints(int points) {
+    remainingPoints += points;
+  }
+  
+  
+  public void subtractPoints(int points) {
+    remainingPoints -= points;
   }
 }
