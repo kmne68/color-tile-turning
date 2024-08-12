@@ -32,7 +32,29 @@ public class Player {
   }
   
   
+  public String getName() {
+    return name;
+  }
+  
+  
+  public int getRemainingPoints() {
+    return remainingPoints;
+  }
+  
+  
+  public int getScore() {
+    return score;
+  }
+  
+  
+  public Color getTargetColor() {
+    return targetColor;
+  }
+  
   public void subtractPoints(int points) {
     remainingPoints -= points;
   }
+  
+  
+  
 }

@@ -24,4 +24,20 @@ public class Tile {
       color = newColor;
     }
   }
+  
+  
+  public Color getColor() {
+    
+    return color;
+  }
+  
+  
+  public boolean isLocked() {
+    return isLocked;
+  }
+  
+  
+  public void setLocked(boolean lockStatus) {
+    isLocked = lockStatus;
+  }
 }

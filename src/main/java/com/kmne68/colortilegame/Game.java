@@ -7,6 +7,7 @@ package com.kmne68.colortilegame;
 import java.awt.Color;
 // import java.awt.List;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -33,6 +34,67 @@ public class Game {
     // Create grid
     grid = new Grid(numRows, numCols);
   }
+  
+  
+  public void changeTileColor(int row, int col, Color newColor) {
+    if(currentPlayer.getRemainingPoints() >= 
+            Math.abs(newColor.getRed() - grid.getTileColor(row, col).getRed()) +
+            Math.abs(newColor.getGreen() - grid.getTileColor(row, col).getGreen()) +
+            Math.abs(newColor.getBlue()) - grid.getTileColor(row, col).getBlue())
+    {
+      int colorDifference = 
+              Math.abs(newColor.getRed() - grid.getTileColor(row, col).getRed()) +
+              Math.abs(newColor.getGreen() - grid.getTileColor(row, col).getGreen()) +
+              Math.abs(newColor.getBlue() - grid.getTileColor(row, col).getBlue());
+      currentPlayer.subtractPoints(colorDifference);
+      grid.setTileColor(row, col, newColor);
+      
+      // Check if tile is locked after color change
+      if(newColor.equals(currentPlayer.getTargetColor())) {
+        grid.getTile(row, col).setLocked(true);
+        currentPlayer.addPoints(10);
+      }
+    }       
+  }
             
   // Methods for switching players, checking win conditions, updating scores, etc.
+  public void switchPlayer() {
+    int currentIndex = players.indexOf(currentPlayer);
+    currentPlayer = players.get((currentIndex + 1) % players.size());
+  }
+  
+  public boolean checkWinCondition() {
+    for(Player player : players) {
+      boolean hasWon = true;
+      for(int row = 0; row < grid.getNumRows(); row++) {
+        for(int col = 0; col < grid.getNumCols(); col++) {
+          if(!grid.getTile(row, col).getColor().equals(player.getTargetColor())) {
+            hasWon = false;
+            break;
+          }
+        }
+        if (hasWon) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return false;
+  }
+  
+  
+  public String endGame() {
+    // Determine the winner based on scores
+    Player winner = players.stream().max(Comparator.comparingInt(Player::getScore)).get();
+  
+    return winner.getName();
+    // Display a message indicating the winner
+    // System.out.println("Game over! The winner is: " + winner.getName());
+  }
+  
+  
+  public Player getCurrentPlayer() {
+    return currentPlayer;
+  }
+
 }

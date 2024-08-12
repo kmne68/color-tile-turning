@@ -30,10 +30,33 @@ public class Grid {
     }
   }
   
+  
+  public int getNumCols() {
+    return numCols;
+  }
+  
+  public int getNumRows() {
+    return numRows;
+  }
+  
+  
   public Tile getTile(int row, int col) {
     return tiles[row][col];
   }
   
   
+  public Color getTileColor(int row, int col) {
+    return tiles[row][col].getColor();
+  }
+  
+  
+  public void setTileColor(int row, int col, Color newColor) {
+    tiles[row][col].changeColor(newColor);
+  }
+  
+  
+  public boolean isTileLocked(int row, int col) {
+    return tiles[row][col].isLocked();
+  }
   
 }
