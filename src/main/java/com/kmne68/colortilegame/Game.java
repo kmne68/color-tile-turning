@@ -19,7 +19,9 @@ public class Game {
   
   private List<Player> players;
   private Player currentPlayer;
-  Grid grid;
+  private Grid grid;
+  private int maxTurns = 10;
+  private int currentTurn = 0;
     
   public Game(int numRows, int numCols) {
     
@@ -64,6 +66,10 @@ public class Game {
   }
   
   public boolean checkWinCondition() {
+    currentTurn++;
+    if(currentTurn >= maxTurns) {
+      return true;
+    }
     for(Player player : players) {
       boolean hasWon = true;
       for(int row = 0; row < grid.getNumRows(); row++) {
@@ -93,8 +99,22 @@ public class Game {
   }
   
   
+  public void printGrid() {
+    for (int row = 0; row < grid.getNumCols(); row++) {
+      for (int col = 0; col < grid.getNumCols(); col++) {
+      //  System.out.print(grid.getTile(row, col).getColor().getRed() + " ");
+      }
+      System.out.println();
+    }
+  }
+  
   public Player getCurrentPlayer() {
     return currentPlayer;
+  }
+  
+  
+  public Grid getGrid() {
+    return grid;
   }
 
 }

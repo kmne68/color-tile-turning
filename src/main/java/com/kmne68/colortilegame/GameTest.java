@@ -13,10 +13,14 @@ public class GameTest {
   public static void main(String[] args) {
 
     Game game = new Game(10, 10);
+    GameGUI gui = new GameGUI(game);
+    
+    gui.setVisible(true);
 
     while (!game.checkWinCondition()) {
       System.out.println("Current player: " + game.getCurrentPlayer().getName());
 
+      game.printGrid();
       game.switchPlayer();
     }
 
