@@ -25,7 +25,7 @@ public class GamePanel extends JPanel {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     
-    System.out.println("paintComponent called");
+    System.out.println("paintComponent called: " + getWidth() + ", " + getHeight());
     
     int cellSize = Constants.CELL_SIZE;
     

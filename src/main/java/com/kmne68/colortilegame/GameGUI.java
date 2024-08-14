@@ -26,10 +26,12 @@ public class GameGUI extends JFrame {
     setTitle("Color Tile Game");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    gamePanel = new JPanel();
+    gamePanel = new GamePanel(game);
     gamePanel.setPreferredSize(new Dimension(game.getGrid().getNumCols() * Constants.CELL_SIZE + 2 * padding,
             game.getGrid().getNumRows() * Constants.CELL_SIZE + 2 * padding));
     add(gamePanel);
+    
+    System.out.println("Panel size: " + gamePanel.getSize());
 
     pack();
     setVisible(true);

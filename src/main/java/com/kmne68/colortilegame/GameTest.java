@@ -18,7 +18,7 @@ public class GameTest {
     gui.setVisible(true);
 
     while (!game.checkWinCondition()) {
-      System.out.println("Current player: " + game.getCurrentPlayer().getName());
+    //  System.out.println("Current player: " + game.getCurrentPlayer().getName());
 
       game.printGrid();
       game.switchPlayer();
