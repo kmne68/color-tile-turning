@@ -22,6 +22,8 @@ public class Game {
   private Grid grid;
   private int maxTurns = 10;
   private int currentTurn = 0;
+  private int selectedRow = -1;
+  private int selectedCol = -1;
     
   public Game(int numRows, int numCols) {
     
@@ -115,6 +117,22 @@ public class Game {
   
   public Grid getGrid() {
     return grid;
+  }
+  
+  
+  public void setSelectedTile(int row, int col) {
+    selectedRow = row;
+    selectedCol = col;
+  }
+  
+  
+  public int getSelectedRow() {
+    return selectedRow;
+  }
+  
+  
+  public int getSelectedCol() {
+    return selectedCol;
   }
 
 }
