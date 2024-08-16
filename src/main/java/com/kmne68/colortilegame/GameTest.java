@@ -26,16 +26,14 @@ public class GameTest {
       game.printGrid();
       game.switchPlayer();
       
-      System.out.println("Enter new color (RGB): ");
-      Scanner scanner = new Scanner(System.in);
-      int red = scanner.nextInt();
-      int green = scanner.nextInt();
-      int blue = scanner.nextInt();
-      Color newColor = new Color(red, green, blue);
+    //  System.out.println("Enter new color (RGB): ");
+    //  Scanner scanner = new Scanner(System.in);
+    //  int red = scanner.nextInt();
+    //  int green = scanner.nextInt();
+    //  int blue = scanner.nextInt();
+    //  Color newColor = new Color(red, green, blue);
       
-      game.changeTileColor(game.getSelectedRow(), game.getSelectedCol(), newColor);
+    //  game.changeTileColor(game.getSelectedRow(), game.getSelectedCol(), newColor);
     }
-
-    System.out.println("Game over! Winner: " + game.endGame());
   }
 }
