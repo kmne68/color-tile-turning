@@ -20,11 +20,11 @@ public class GameTest {
     
     gui.setVisible(true);
 
-    while (!game.checkWinCondition()) {
+  //  while (!game.checkWinCondition()) {
     //  System.out.println("Current player: " + game.getCurrentPlayer().getName());
 
       game.printGrid();
-      game.switchPlayer();
+    //  game.switchPlayer();
       
     //  System.out.println("Enter new color (RGB): ");
     //  Scanner scanner = new Scanner(System.in);
@@ -33,7 +33,7 @@ public class GameTest {
     //  int blue = scanner.nextInt();
     //  Color newColor = new Color(red, green, blue);
       
-    //  game.changeTileColor(game.getSelectedRow(), game.getSelectedCol(), newColor);
-    }
+    // game.changeTileColor(game.getSelectedRow(), game.getSelectedCol(), newColor);
+  //  }
   }
 }

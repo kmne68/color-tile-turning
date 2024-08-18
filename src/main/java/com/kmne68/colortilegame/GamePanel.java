@@ -59,8 +59,8 @@ public class GamePanel extends JPanel {
       }
     });
     repaint();
-
   }
+  
 
   @Override
   protected void paintComponent(Graphics g) {
@@ -77,7 +77,7 @@ public class GamePanel extends JPanel {
 
         // Highlight the selected tile
         if (selectedRow >= 0 && selectedCol >= 0) {
-     //     Frame topFrame = (Frame) SwingUtilities.getAncestorOfClass(Frame.class, GamePanel.this);
+      //    Frame topFrame = (Frame) SwingUtilities.getAncestorOfClass(Frame.class, GamePanel.this);
      //     ColorDialog colorDialog = new ColorDialog((JFrame) topFrame, game, selectedRow, selectedCol);
 
         //  JDialog colorDialog = new JDialog(this, "Choose Color", true, colorChooser, null, null);

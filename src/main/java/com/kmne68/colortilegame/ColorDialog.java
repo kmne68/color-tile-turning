@@ -7,7 +7,6 @@ package com.kmne68.colortilegame;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -48,7 +47,6 @@ public class ColorDialog extends JDialog {
     
     System.out.println("BEFORE JPANEL");
     
-//    JPanel contentPanel = new JPanel(new GridLayout(4, 2));
     JPanel contentPanel = new JPanel(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
     
@@ -107,7 +105,9 @@ public class ColorDialog extends JDialog {
           JOptionPane.showMessageDialog(this, "Invalid color values. Please enter values between 0 and 255");
           return;
       }
+        System.out.println("RED: " + red + " Green: " + green + " Blue: " + blue);
         newColor = new Color(red, green, blue);
+        System.out.println("NEW COLOR: " + newColor);
         game.changeTileColor(selectedRow, selectedCol, newColor);
         gamePanel.repaint();
         setVisible(false);
