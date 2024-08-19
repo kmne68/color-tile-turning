@@ -15,6 +15,7 @@ public class Grid {
   private Tile[][] tiles;
   private int numRows;
   private int numCols;
+  private int red, green, blue;
   
   public Grid(int numRows, int numCols) {
     this.numRows = numRows;
@@ -58,5 +59,31 @@ public class Grid {
   public boolean isTileLocked(int row, int col) {
     return tiles[row][col].isLocked();
   }
+
+  public int getRed() {
+    return red;
+  }
+
+  public void setRed(int red) {
+    this.red = red;
+  }
+
+  public int getGreen() {
+    return green;
+  }
+
+  public void setGreen(int green) {
+    this.green = green;
+  }
+
+  public int getBlue() {
+    return blue;
+  }
+
+  public void setBlue(int blue) {
+    this.blue = blue;
+  }
+  
+  
   
 }

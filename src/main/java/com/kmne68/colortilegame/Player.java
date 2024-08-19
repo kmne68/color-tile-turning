@@ -31,6 +31,11 @@ public class Player {
     remainingPoints += points;
   }
   
+  public void incrementScore() {
+    score++;
+    System.out.println("SCORE: " + score);
+  }
+  
   
   public String getName() {
     return name;
