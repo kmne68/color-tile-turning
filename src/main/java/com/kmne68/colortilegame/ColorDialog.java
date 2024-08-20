@@ -27,6 +27,7 @@ public class ColorDialog extends JDialog {
   private GamePanel gamePanel;
   Game game;
   private int selectedRow, selectedCol;
+  String tileRed, tileGreen, tileBlue;
   
   public ColorDialog(JFrame parent, Game game, int selectedRow, int selectedCol, GamePanel gamePanel) {
     super(parent, "Choose Color", ModalityType.APPLICATION_MODAL);
@@ -42,10 +43,14 @@ public class ColorDialog extends JDialog {
     blueField = new JTextField(3);
     okButton = new JButton("OK");
     cancelButton = new JButton("CANCEL");
+    tileRed = Integer.toString(game.getGrid().getTileColor(selectedRow, selectedCol).getRed());
+    tileGreen = Integer.toString(game.getGrid().getTileColor(selectedRow, selectedCol).getGreen());
+    tileBlue = Integer.toString(game.getGrid().getTileColor(selectedRow, selectedCol).getBlue());
+    
+    System.out.println("From color dialog");
+    System.out.println("RGB: " + tileRed + ", " + tileGreen + ", " + tileBlue);
     
     // Create panel and layout
-    
-    System.out.println("BEFORE JPANEL");
     
     JPanel contentPanel = new JPanel(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
@@ -56,6 +61,9 @@ public class ColorDialog extends JDialog {
     gbc.gridx = 1;
     gbc.gridy = 0;
     contentPanel.add(redField, gbc);
+    gbc.gridx = 2;
+    gbc.gridy = 0;
+    contentPanel.add(new JLabel(tileRed), gbc);
     
     gbc.gridx = 0;
     gbc.gridy = 1;
@@ -63,20 +71,31 @@ public class ColorDialog extends JDialog {
     gbc.gridx = 1;
     gbc.gridy = 1;
     contentPanel.add(greenField, gbc);
+    gbc.gridx = 2;
+    gbc.gridy = 1;
+    contentPanel.add(new JLabel(tileGreen), gbc);
 
     gbc.gridx = 0;
     gbc.gridy = 2;
     contentPanel.add(new JLabel("Blue"), gbc);
     gbc.gridx = 1;
     gbc.gridy = 2;
-    contentPanel.add(blueField, gbc);  
+    contentPanel.add(blueField, gbc);
+    gbc.gridx = 2;
+    gbc.gridy = 2;
+    contentPanel.add(new JLabel(tileBlue), gbc);  
     
     gbc.gridx = 0;
     gbc.gridy = 3;
-    gbc.gridwidth = 1;  // Span two columns
+    gbc.gridwidth = 2;  // Span two columns
     contentPanel.add(okButton, gbc);
     
     gbc.gridx = 1;
+    gbc.gridy = 3;
+    gbc.gridwidth = 1;
+    contentPanel.add(new JLabel(""), gbc);
+    
+    gbc.gridx = 2;
     gbc.gridy = 3;
     gbc.gridwidth = 1;  // Span two columns
     contentPanel.add(cancelButton, gbc);
