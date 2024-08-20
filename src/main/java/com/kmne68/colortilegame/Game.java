@@ -5,7 +5,6 @@
 package com.kmne68.colortilegame;
 
 import java.awt.Color;
-// import java.awt.List;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -65,8 +64,7 @@ public class Game {
     System.out.println("REMAINING POINTS: " + remainingPoints);
      */
     System.out.println("BEFORE WHILE REMAINING POINTS: " + currentPlayer.getRemainingPoints());
-    
-    
+
     while (currentPlayer.getRemainingPoints() > 0) {
       if (currentPlayer.getRemainingPoints() >= redDiff) {
         System.out.println("redDiff: " + redDiff);
@@ -77,7 +75,7 @@ public class Game {
         grid.setRed(red - currentPlayer.getRemainingPoints());
         // set remaining points to zero
         currentPlayer.subtractPoints(currentPlayer.getRemainingPoints());
-        
+
         System.out.println("ELSE RED REMAINING POINTS: " + currentPlayer.getRemainingPoints());
         break;
       }
@@ -90,7 +88,7 @@ public class Game {
         grid.setGreen(green - currentPlayer.getRemainingPoints());
         // set remaining points to zero
         currentPlayer.subtractPoints(currentPlayer.getRemainingPoints());
-        
+
         System.out.println("ELSE GREEN REMAINING POINTS: " + currentPlayer.getRemainingPoints());
         break;
       }
@@ -106,13 +104,14 @@ public class Game {
         System.out.println("ELSE BLUE REMAINING POINTS: " + currentPlayer.getRemainingPoints());
         break;
       }
-      
+
     }
+    System.out.println("OUTSIDE WHILE");
     grid.setTileColor(row, col, newColor);
     
+//    switchPlayer();
 
 // Check if tile is locked after color change
-
 // TODO: PREVENT POINT AWARD FROM ENABLING ENDLESS WHILE -- happens only with player 1
 // TODO: FIX PLAYER SWITCH AFTER TURN ENDS
 // TODO: FIGURE OUT HOW TO DEAL WITH ADDITIONAL POINTS
@@ -120,64 +119,50 @@ public class Game {
       grid.getTile(row, col).setLocked(true);
       currentPlayer.incrementScore();
       System.out.println("LOCKED?: " + grid.getTile(row, col).isLocked());
-      currentPlayer.addPoints(10);
+      //  currentPlayer.addPoints(10);
     }
+
+    /*
+    System.out.println("CURRENT PLAYER BEFORE: " + currentPlayer);
+    if (currentPlayer == players.get(0)) {
+      currentPlayer = players.get(1);
+    } else {
+      currentPlayer = players.get(0);
+    }
+    System.out.println("CURRENT PLAYER AFTER: " + currentPlayer);
+     */
   }
 // }
 
-  public int getRed() {
-    return red;
-  }
-
-  public void setRed(int red) {
-    this.red = red;
-  }
-
-  public int getGreen() {
-    return green;
-  }
-
-  public void setGreen(int green) {
-    this.green = green;
-  }
-
-  public int getBlue() {
-    return blue;
-  }
-
-  public void setBlue(int blue) {
-    this.blue = blue;
-  }
-
 // Methods for switching players, checking win conditions, updating scores, etc.
-/*  public void switchPlayer() {
-    int currentIndex = players.indexOf(currentPlayer);
-    currentPlayer = players.get((currentIndex + 1) % players.size());
-  }
-  
-  public boolean checkWinCondition() {
-    currentTurn++;
-    if(currentTurn >= maxTurns) {
-      return true;
-    }
-    for(Player player : players) {
-      boolean hasWon = true;
-      for(int row = 0; row < grid.getNumRows(); row++) {
-        for(int col = 0; col < grid.getNumCols(); col++) {
-          if(!grid.getTile(row, col).getColor().equals(player.getTargetColor())) {
-            hasWon = false;
-            break;
-          }
-        }
-        if (hasWon) {
-          return true;
-        }
-      }
-      return false;
-    }
-    return false;
-  }
-  */
+  public void switchPlayer() {
+    int currentIndex = players.indexOf(currentPlayer);
+    currentPlayer = players.get((currentIndex + 1) % players.size());
+  }
+
+  public boolean checkWinCondition() {
+    currentTurn++;
+    if (currentTurn >= maxTurns) {
+      return true;
+    }/*
+    for (Player player : players) {
+      boolean hasWon = true;
+      for (int row = 0; row < grid.getNumRows(); row++) {
+        for (int col = 0; col < grid.getNumCols(); col++) {
+          if (!grid.getTile(row, col).getColor().equals(player.getTargetColor())) {
+            hasWon = false;
+            break;
+          }
+        }
+        if (hasWon) {
+          return true;
+        }
+      }
+      return false;
+    } */
+    return false;
+  }
+
   public String endGame() {
     // Determine the winner based on scores
     Player winner = players.stream().max(Comparator.comparingInt(Player::getScore)).get();
@@ -215,6 +200,30 @@ public class Game {
 
   public int getSelectedCol() {
     return selectedCol;
+  }
+
+  public int getRed() {
+    return red;
+  }
+
+  public void setRed(int red) {
+    this.red = red;
+  }
+
+  public int getGreen() {
+    return green;
+  }
+
+  public void setGreen(int green) {
+    this.green = green;
+  }
+
+  public int getBlue() {
+    return blue;
+  }
+
+  public void setBlue(int blue) {
+    this.blue = blue;
   }
 
 }
