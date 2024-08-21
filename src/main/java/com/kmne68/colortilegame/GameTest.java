@@ -4,9 +4,6 @@
  */
 package com.kmne68.colortilegame;
 
-import java.awt.Color;
-import java.util.Scanner;
-
 /**
  *
  * @author kmne6
@@ -20,20 +17,11 @@ public class GameTest {
     
     gui.setVisible(true);
 
-  //  while (!game.checkWinCondition()) {
-    //  System.out.println("Current player: " + game.getCurrentPlayer().getName());
+    while (!game.checkWinCondition()) {
+      System.out.println("Current player: " + game.getCurrentPlayer().getName());
 
       game.printGrid();
-    //  game.switchPlayer();
-      
-    //  System.out.println("Enter new color (RGB): ");
-    //  Scanner scanner = new Scanner(System.in);
-    //  int red = scanner.nextInt();
-    //  int green = scanner.nextInt();
-    //  int blue = scanner.nextInt();
-    //  Color newColor = new Color(red, green, blue);
-      
-    // game.changeTileColor(game.getSelectedRow(), game.getSelectedCol(), newColor);
-  //  }
+      game.switchPlayer();
+    }
   }
 }

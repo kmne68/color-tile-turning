@@ -30,8 +30,8 @@ public class Game {
 
 // Create players
     players = new ArrayList<>();
-    players.add(new Player("Player1", Color.BLACK));
-    players.add(new Player("Player2", Color.WHITE));
+    players.add(new Player("Player1", new Color(0, 0, 0)));
+    players.add(new Player("Player2", new Color( 255, 255, 255)));
 
 // Randomly determine starting player
     currentPlayer = players.get(new Random().nextInt(players.size()));
@@ -108,8 +108,6 @@ public class Game {
     }
     System.out.println("OUTSIDE WHILE");
     grid.setTileColor(row, col, newColor);
-    
-//    switchPlayer();
 
 // Check if tile is locked after color change
 // TODO: PREVENT POINT AWARD FROM ENABLING ENDLESS WHILE -- happens only with player 1
@@ -122,6 +120,8 @@ public class Game {
       //  currentPlayer.addPoints(10);
     }
 
+        
+   // switchPlayer();
     /*
     System.out.println("CURRENT PLAYER BEFORE: " + currentPlayer);
     if (currentPlayer == players.get(0)) {
@@ -144,7 +144,7 @@ public class Game {
     currentTurn++;
     if (currentTurn >= maxTurns) {
       return true;
-    }/*
+    }
     for (Player player : players) {
       boolean hasWon = true;
       for (int row = 0; row < grid.getNumRows(); row++) {
@@ -159,7 +159,7 @@ public class Game {
         }
       }
       return false;
-    } */
+    } 
     return false;
   }
 
