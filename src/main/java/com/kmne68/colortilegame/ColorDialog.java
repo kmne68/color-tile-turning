@@ -32,6 +32,8 @@ public class ColorDialog extends JDialog {
   public ColorDialog(JFrame parent, Game game, int selectedRow, int selectedCol, GamePanel gamePanel) {
     super(parent, "Choose Color", ModalityType.APPLICATION_MODAL);
     
+    System.out.println("TOP OF COLOR DIALOG");
+    
     this.game = game;
     this.selectedRow = selectedRow;
     this.selectedCol = selectedCol;

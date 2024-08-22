@@ -19,6 +19,8 @@ public class GameGUI extends JFrame {
   private JPanel gamePanel;
 
   public GameGUI(Game game) {
+    
+    System.out.println("TOP OF GAME GUI");
 
     this.game = game;
 

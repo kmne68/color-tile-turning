@@ -4,6 +4,8 @@
  */
 package com.kmne68.colortilegame;
 
+import com.kmne68.colortilegame.ColorDialog;
+import com.kmne68.colortilegame.Game;
 import com.kmne68.utils.Constants;
 import java.awt.Color;
 import java.awt.Frame;
@@ -27,6 +29,8 @@ public class GamePanel extends JPanel {
 
   public GamePanel(Game game) {
     this.game = game;
+    
+    System.out.println("TOP OF GAME PANEL");
 
     addMouseListener(new MouseAdapter() {
       @Override

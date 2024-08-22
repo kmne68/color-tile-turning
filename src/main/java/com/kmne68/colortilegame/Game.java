@@ -28,10 +28,12 @@ public class Game {
 
   public Game(int numRows, int numCols) {
 
+    System.out.println("TOP OF GAME CLASS");
+
 // Create players
     players = new ArrayList<>();
     players.add(new Player("Player1", new Color(0, 0, 0)));
-    players.add(new Player("Player2", new Color( 255, 255, 255)));
+    players.add(new Player("Player2", new Color(255, 255, 255)));
 
 // Randomly determine starting player
     currentPlayer = players.get(new Random().nextInt(players.size()));
@@ -50,9 +52,9 @@ public class Game {
     red = grid.getTileColor(row, col).getRed();
     green = grid.getTileColor(row, col).getGreen();
     blue = grid.getTileColor(row, col).getBlue();
-    int redDiff = Math.abs(grid.getTileColor(row, col).getRed() - newColor.getRed());
-    int greenDiff = Math.abs(grid.getTileColor(row, col).getGreen() - newColor.getGreen());
-    int blueDiff = Math.abs(grid.getTileColor(row, col).getBlue() - newColor.getBlue());
+    //  int redDiff = Math.abs(grid.getTileColor(row, col).getRed() - newColor.getRed());
+    //  int greenDiff = Math.abs(grid.getTileColor(row, col).getGreen() - newColor.getGreen());
+    //  int blueDiff = Math.abs(grid.getTileColor(row, col).getBlue() - newColor.getBlue());
 
     /*
     remainingPoints = currentPlayer.getRemainingPoints() - (redDiff + greenDiff + blueDiff);
@@ -66,11 +68,19 @@ public class Game {
     System.out.println("BEFORE WHILE REMAINING POINTS: " + currentPlayer.getRemainingPoints());
 
     while (currentPlayer.getRemainingPoints() > 0) {
+      System.out.println("WHILE TILE RED: " + grid.getTileColor(row, col).getRed());
+      System.out.println("WHILE TILE GREEN: " + grid.getTileColor(row, col).getGreen());
+      System.out.println("WHILE TILE BLUE: " + grid.getTileColor(row, col).getBlue());
+      int redDiff = Math.abs(grid.getTileColor(row, col).getRed() - newColor.getRed());
+      int greenDiff = Math.abs(grid.getTileColor(row, col).getGreen() - newColor.getGreen());
+      int blueDiff = Math.abs(grid.getTileColor(row, col).getBlue() - newColor.getBlue());
+
       if (currentPlayer.getRemainingPoints() >= redDiff) {
         System.out.println("redDiff: " + redDiff);
         currentPlayer.subtractPoints(redDiff);
         System.out.println("IN RED REMAINING POINTS: " + currentPlayer.getRemainingPoints());
       } else {
+
         // reduce red by remaining points
         grid.setRed(red - currentPlayer.getRemainingPoints());
         // set remaining points to zero
@@ -104,10 +114,12 @@ public class Game {
         System.out.println("ELSE BLUE REMAINING POINTS: " + currentPlayer.getRemainingPoints());
         break;
       }
-
     }
     System.out.println("OUTSIDE WHILE");
     grid.setTileColor(row, col, newColor);
+    currentPlayer.addPoints(255);
+    //  selectedRow = -1;
+    //  selectedCol = -1;
 
 // Check if tile is locked after color change
 // TODO: PREVENT POINT AWARD FROM ENABLING ENDLESS WHILE -- happens only with player 1
@@ -118,11 +130,19 @@ public class Game {
       currentPlayer.incrementScore();
       System.out.println("LOCKED?: " + grid.getTile(row, col).isLocked());
       //  currentPlayer.addPoints(10);
+      //  switchPlayer();
     }
+    /* 
+    if(currentPlayer == players.get(0)) {
+      currentPlayer = players.get(1);
+    } else {
+      currentPlayer = players.get(0);
+    } */
+    // switchPlayer2();
+  }
+// }    
 
-        
-   // switchPlayer();
-    /*
+  public void switchPlayer2() {
     System.out.println("CURRENT PLAYER BEFORE: " + currentPlayer);
     if (currentPlayer == players.get(0)) {
       currentPlayer = players.get(1);
@@ -130,12 +150,11 @@ public class Game {
       currentPlayer = players.get(0);
     }
     System.out.println("CURRENT PLAYER AFTER: " + currentPlayer);
-     */
   }
-// }
 
 // Methods for switching players, checking win conditions, updating scores, etc.
   public void switchPlayer() {
+    System.out.println("IN SWITCH PLAYER");
     int currentIndex = players.indexOf(currentPlayer);
     currentPlayer = players.get((currentIndex + 1) % players.size());
   }
@@ -159,7 +178,7 @@ public class Game {
         }
       }
       return false;
-    } 
+    }
     return false;
   }
 

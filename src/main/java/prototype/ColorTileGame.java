@@ -1,9 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-package com.kmne68.colortilegame;
+package prototype;
 
-import com.kmne68.utils.ColorDialog;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;

@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.kmne68.utils;
+package prototype;
 
-import com.kmne68.colortilegame.ColorTileGame;
+import prototype.ColorTileGame;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JButton;
