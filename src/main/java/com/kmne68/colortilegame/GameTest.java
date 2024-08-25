@@ -17,12 +17,12 @@ public class GameTest {
     GameGUI gui = new GameGUI(game);
     
     gui.setVisible(true);
-/*
+
     while (!game.checkWinCondition()) {
       System.out.println("Current player: " + game.getCurrentPlayer().getName());
 
       game.printGrid();
     //  game.switchPlayer2();
-    } */
+    } 
   }
 }

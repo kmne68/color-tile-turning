@@ -13,9 +13,14 @@ import java.awt.Color;
 public class Tile {
   private Color color;
   private boolean isLocked;
+  private boolean isSelected;
+  private int red;
+  private int green;
+  private int blue;
   
   public Tile(Color color) {
     this.color = color;
+    this.isSelected = false;
     this.isLocked = false;
   }
   
@@ -39,5 +44,24 @@ public class Tile {
   
   public void setLocked(boolean lockStatus) {
     isLocked = lockStatus;
+  }
+  
+  
+  public void setSelected(boolean isSelected) {
+    isSelected = true;
+  }
+  
+  public void setRed(int red) {
+    this.red = red;
+  }
+  
+  
+  public void setGreen(int green) {
+    this.green = green;
+  }
+  
+  
+  public void setBlue(int blue) {
+    this.blue = blue;
   }
 }

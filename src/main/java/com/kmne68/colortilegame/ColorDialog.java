@@ -27,7 +27,8 @@ public class ColorDialog extends JDialog {
   private GamePanel gamePanel;
   Game game;
   private int selectedRow, selectedCol;
-  String tileRed, tileGreen, tileBlue;
+  private String tileRed, tileGreen, tileBlue;
+  private String playerName;
   
   public ColorDialog(JFrame parent, Game game, int selectedRow, int selectedCol, GamePanel gamePanel) {
     super(parent, "Choose Color", ModalityType.APPLICATION_MODAL);
@@ -48,6 +49,7 @@ public class ColorDialog extends JDialog {
     tileRed = Integer.toString(game.getGrid().getTileColor(selectedRow, selectedCol).getRed());
     tileGreen = Integer.toString(game.getGrid().getTileColor(selectedRow, selectedCol).getGreen());
     tileBlue = Integer.toString(game.getGrid().getTileColor(selectedRow, selectedCol).getBlue());
+    playerName = game.getCurrentPlayer().getName();
     
     System.out.println("From color dialog");
     System.out.println("RGB: " + tileRed + ", " + tileGreen + ", " + tileBlue);
@@ -59,46 +61,66 @@ public class ColorDialog extends JDialog {
     
     gbc.gridx = 0;
     gbc.gridy = 0;
-    contentPanel.add(new JLabel("Red"), gbc);
+    contentPanel.add(new JLabel("Current player:"), gbc);
+    
     gbc.gridx = 1;
     gbc.gridy = 0;
-    contentPanel.add(redField, gbc);
+    contentPanel.add(new JLabel(""), gbc);
+    
     gbc.gridx = 2;
     gbc.gridy = 0;
-    contentPanel.add(new JLabel(tileRed), gbc);
+    contentPanel.add(new JLabel(playerName), gbc);
     
     gbc.gridx = 0;
     gbc.gridy = 1;
-    contentPanel.add(new JLabel("Green"), gbc);
+    contentPanel.add(new JLabel("Red"), gbc);
+    
     gbc.gridx = 1;
     gbc.gridy = 1;
-    contentPanel.add(greenField, gbc);
+    contentPanel.add(redField, gbc);
+    
     gbc.gridx = 2;
     gbc.gridy = 1;
-    contentPanel.add(new JLabel(tileGreen), gbc);
+    contentPanel.add(new JLabel(tileRed), gbc);
 
     gbc.gridx = 0;
     gbc.gridy = 2;
-    contentPanel.add(new JLabel("Blue"), gbc);
+    contentPanel.add(new JLabel("Green"), gbc);
+    
     gbc.gridx = 1;
     gbc.gridy = 2;
-    contentPanel.add(blueField, gbc);
+    contentPanel.add(greenField, gbc);
+    
     gbc.gridx = 2;
     gbc.gridy = 2;
-    contentPanel.add(new JLabel(tileBlue), gbc);  
+    contentPanel.add(new JLabel(tileGreen), gbc);
     
     gbc.gridx = 0;
     gbc.gridy = 3;
-    gbc.gridwidth = 2;  // Span two columns
-    contentPanel.add(okButton, gbc);
+    contentPanel.add(new JLabel("Blue"), gbc);
     
     gbc.gridx = 1;
     gbc.gridy = 3;
     gbc.gridwidth = 1;
-    contentPanel.add(new JLabel(""), gbc);
+    contentPanel.add(blueField, gbc);
     
     gbc.gridx = 2;
     gbc.gridy = 3;
+    gbc.gridwidth = 1;
+    contentPanel.add(new JLabel(tileBlue), gbc);  
+    
+    gbc.gridx = 0;
+    gbc.gridy = 4;
+    gbc.gridwidth = 1;  // Span two columns
+    contentPanel.add(okButton, gbc);
+    
+    gbc.gridx = 1;
+    gbc.gridy = 4;
+    gbc.gridwidth = 1;
+    contentPanel.add(new JLabel(""), gbc);
+    
+    gbc.gridx = 2;
+    gbc.gridy = 4;
     gbc.gridwidth = 1;  // Span two columns
     contentPanel.add(cancelButton, gbc);
     
@@ -131,6 +153,7 @@ public class ColorDialog extends JDialog {
         System.out.println("NEW COLOR: " + newColor);
         game.changeTileColor(selectedRow, selectedCol, newColor);
         gamePanel.repaint();
+        game.switchPlayer();
         setVisible(false);
       } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this, "Invalid input. Please enter numbers.");;

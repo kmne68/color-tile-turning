@@ -67,7 +67,7 @@ public class Game {
      */
     System.out.println("BEFORE WHILE REMAINING POINTS: " + currentPlayer.getRemainingPoints());
 
-    while (currentPlayer.getRemainingPoints() > 0) {
+//    while (currentPlayer.getRemainingPoints() > 0) {
       System.out.println("WHILE TILE RED: " + grid.getTileColor(row, col).getRed());
       System.out.println("WHILE TILE GREEN: " + grid.getTileColor(row, col).getGreen());
       System.out.println("WHILE TILE BLUE: " + grid.getTileColor(row, col).getBlue());
@@ -87,7 +87,7 @@ public class Game {
         currentPlayer.subtractPoints(currentPlayer.getRemainingPoints());
 
         System.out.println("ELSE RED REMAINING POINTS: " + currentPlayer.getRemainingPoints());
-        break;
+    //    break;
       }
       if (currentPlayer.getRemainingPoints() >= greenDiff) {
         System.out.println("greenDiff: " + greenDiff);
@@ -100,7 +100,7 @@ public class Game {
         currentPlayer.subtractPoints(currentPlayer.getRemainingPoints());
 
         System.out.println("ELSE GREEN REMAINING POINTS: " + currentPlayer.getRemainingPoints());
-        break;
+    //    break;
       }
       if (currentPlayer.getRemainingPoints() >= blueDiff) {
         System.out.println("blueDiff: " + blueDiff);
@@ -112,12 +112,12 @@ public class Game {
         // set remaining points to zero
         currentPlayer.subtractPoints(currentPlayer.getRemainingPoints());
         System.out.println("ELSE BLUE REMAINING POINTS: " + currentPlayer.getRemainingPoints());
-        break;
+    //    break;
       }
-    }
+  //  }
     System.out.println("OUTSIDE WHILE");
     grid.setTileColor(row, col, newColor);
-    currentPlayer.addPoints(255);
+    
     //  selectedRow = -1;
     //  selectedCol = -1;
 
@@ -129,6 +129,11 @@ public class Game {
       grid.getTile(row, col).setLocked(true);
       currentPlayer.incrementScore();
       System.out.println("LOCKED?: " + grid.getTile(row, col).isLocked());
+      selectedRow = -1;
+      selectedCol = -1;
+      grid.setRed(255);
+      grid.setGreen(255);
+      grid.setBlue(255);
       //  currentPlayer.addPoints(10);
       //  switchPlayer();
     }
@@ -139,8 +144,9 @@ public class Game {
       currentPlayer = players.get(0);
     } */
     // switchPlayer2();
-  }
-// }    
+    
+//  }
+ }    
 
   public void switchPlayer2() {
     System.out.println("CURRENT PLAYER BEFORE: " + currentPlayer);
