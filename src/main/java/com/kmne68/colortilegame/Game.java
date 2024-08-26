@@ -251,4 +251,14 @@ public class Game {
     this.blue = blue;
   }
 
+  public List<Player> getPlayers() {
+    return players;
+  }
+
+  public void setPlayers(List<Player> players) {
+    this.players = players;
+  }
+  
+  
+
 }
