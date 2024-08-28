@@ -33,10 +33,12 @@ public class ColorDialog extends JDialog {
   private String playerName;
   private String player1Score;
   private String player2Score;
-//  private List players = game.getPlayers();
-//  private Object player1 = players.get(0);
-//  private Object player2 = players.get(1);
+  
+
+  
 //  private Player player1 = game.getPlayers().get(0);
+//  private Object player2 = players.get(1);
+ // private Player player1 = game.getPlayers().get(1);
 //  private Player player2 = game.getPlayers().get(1);
   
 
@@ -51,7 +53,10 @@ public class ColorDialog extends JDialog {
     this.selectedRow = selectedRow;
     this.selectedCol = selectedCol;
     this.gamePanel = gamePanel;
-
+    
+    List<Player> players = game.getPlayers();
+    player1Score = Integer.toString(players.get(0).getScore());
+    player2Score = Integer.toString(players.get(1).getScore());
     // Create components
     redField = new JTextField(3);
     greenField = new JTextField(3);
@@ -62,10 +67,6 @@ public class ColorDialog extends JDialog {
     tileGreen = Integer.toString(game.getGrid().getTileColor(selectedRow, selectedCol).getGreen());
     tileBlue = Integer.toString(game.getGrid().getTileColor(selectedRow, selectedCol).getBlue());
     playerName = game.getCurrentPlayer().getName();
-  //  player1Score = Integer.toString(player1.getScore());
-  //  player2Score = Integer.toString(player2.getScore());
-  //  Player player1 = players.get(0);
-  //  Player player2 = players.get(1);
 
     System.out.println("From color dialog");
     System.out.println("RGB: " + tileRed + ", " + tileGreen + ", " + tileBlue);
@@ -78,8 +79,8 @@ public class ColorDialog extends JDialog {
 
     gbc.gridx = 0;
     gbc.gridy = 0;
-    contentPanel.add(leftPanel);
     leftPanel.add(new JLabel("Player 1"));
+    contentPanel.add(leftPanel);
 
     gbc.gridx = 1;
     gbc.gridy = 0;
@@ -88,47 +89,57 @@ public class ColorDialog extends JDialog {
     gbc.gridx = 2;
     gbc.gridy = 0;
     contentPanel.add(new JLabel(playerName), gbc);
-
+    
     gbc.gridx = 3;
+    gbc.gridy = 0;
+    contentPanel.add(new JLabel(""), gbc);
+
+    gbc.gridx = 4;
     gbc.gridy = 0;
     contentPanel.add(rightPanel);
     rightPanel.add(new JLabel("Player 2"));
 
     gbc.gridx = 0;
     gbc.gridy = 1;
-    contentPanel.add(new JLabel(player1Score));
+    leftPanel.add(new JLabel(player1Score));
+    
 
-    gbc.gridx = 1;
+    gbc.gridx = 0;
     gbc.gridy = 1;
     contentPanel.add(new JLabel("Red"), gbc);
 
-    gbc.gridx = 2;
+    gbc.gridx = 1;
     gbc.gridy = 1;
     contentPanel.add(redField, gbc);
 
-    gbc.gridx = 3;
+    gbc.gridx = 2;
     gbc.gridy = 1;
     contentPanel.add(new JLabel(tileRed), gbc);
 
     gbc.gridx = 4;
     gbc.gridy = 1;
-    contentPanel.add(new JLabel(player2Score));
+    rightPanel.add(new JLabel(player2Score));
 
     gbc.gridx = 0;
     gbc.gridy = 2;
-    contentPanel.add(new JLabel(""), gbc);
+    leftPanel.add(new JLabel(""), gbc);
     
-    gbc.gridx = 1;
+    gbc.gridx = 0;
     gbc.gridy = 2;
     contentPanel.add(new JLabel("Green"), gbc);
 
-    gbc.gridx = 2;
+    gbc.gridx = 1;
     gbc.gridy = 2;
     contentPanel.add(greenField, gbc);
 
-    gbc.gridx = 3;
+    gbc.gridx = 2;
     gbc.gridy = 2;
     contentPanel.add(new JLabel(tileGreen), gbc);
+    
+    gbc.gridx = 4;
+    gbc.gridy = 2;
+    rightPanel.add(new JLabel(""), gbc);
+    
     
 //    gbc.gridx = 
 

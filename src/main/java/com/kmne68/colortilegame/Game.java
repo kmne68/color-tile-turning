@@ -252,7 +252,7 @@ public class Game {
   }
 
   public List<Player> getPlayers() {
-    return players;
+    return this.players;
   }
 
   public void setPlayers(List<Player> players) {
