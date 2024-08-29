@@ -27,7 +27,7 @@ public class ColorDialog extends JDialog {
   private JButton okButton, cancelButton;
   private Color newColor;
   private GamePanel gamePanel;
-  Game game;
+  private Game game;
   private int selectedRow, selectedCol;
   private String tileRed, tileGreen, tileBlue;
   private String playerName;
@@ -35,19 +35,11 @@ public class ColorDialog extends JDialog {
   private String player2Score;
   
 
-  
-//  private Player player1 = game.getPlayers().get(0);
-//  private Object player2 = players.get(1);
- // private Player player1 = game.getPlayers().get(1);
-//  private Player player2 = game.getPlayers().get(1);
-  
-
   public ColorDialog(JFrame parent, Game game, int selectedRow, int selectedCol, GamePanel gamePanel) {
     super(parent, "Choose Color", ModalityType.APPLICATION_MODAL);
     
     
     System.out.println("TOP OF COLOR DIALOG");
- //   System.out.println("players: " + players.get(0));
     
     this.game = game;
     this.selectedRow = selectedRow;
@@ -73,116 +65,117 @@ public class ColorDialog extends JDialog {
 
     // Create panel and layout
     JPanel contentPanel = new JPanel(new GridBagLayout());
-    JPanel leftPanel = new JPanel();
-    JPanel rightPanel = new JPanel();
     GridBagConstraints gbc = new GridBagConstraints();
 
     gbc.gridx = 0;
     gbc.gridy = 0;
-    leftPanel.add(new JLabel("Player 1"));
-    contentPanel.add(leftPanel);
+    contentPanel.add(new JLabel("Player 1"), gbc);
+ //   contentPanel.add(leftPanel);
 
     gbc.gridx = 1;
     gbc.gridy = 0;
-    leftPanel.add(new JLabel("Current player:"), gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 0;
-    contentPanel.add(new JLabel(playerName), gbc);
+    contentPanel.add(new JLabel("Current player:"), gbc);
     
-    gbc.gridx = 3;
+    gbc.gridx = 2;
     gbc.gridy = 0;
     contentPanel.add(new JLabel(""), gbc);
 
+    gbc.gridx = 3;
+    gbc.gridy = 0;
+    contentPanel.add(new JLabel(playerName), gbc);
+
     gbc.gridx = 4;
     gbc.gridy = 0;
-    contentPanel.add(rightPanel);
-    rightPanel.add(new JLabel("Player 2"));
-
+  //  contentPanel.add(rightPanel);
+    contentPanel.add(new JLabel("Player 2"), gbc);
+    
     gbc.gridx = 0;
     gbc.gridy = 1;
-    leftPanel.add(new JLabel(player1Score));
+    contentPanel.add(new JLabel(player1Score), gbc);
     
-
-    gbc.gridx = 0;
+    gbc.gridx = 1;
     gbc.gridy = 1;
     contentPanel.add(new JLabel("Red"), gbc);
 
-    gbc.gridx = 1;
+    gbc.gridx = 2;
     gbc.gridy = 1;
     contentPanel.add(redField, gbc);
 
-    gbc.gridx = 2;
+    gbc.gridx = 3;
     gbc.gridy = 1;
     contentPanel.add(new JLabel(tileRed), gbc);
 
     gbc.gridx = 4;
     gbc.gridy = 1;
-    rightPanel.add(new JLabel(player2Score));
-
-    gbc.gridx = 0;
-    gbc.gridy = 2;
-    leftPanel.add(new JLabel(""), gbc);
+    contentPanel.add(new JLabel(player2Score), gbc);
+    
     
     gbc.gridx = 0;
     gbc.gridy = 2;
+    contentPanel.add(new JLabel(""), gbc);
+    
+    gbc.gridx = 1;
+    gbc.gridy = 2;
     contentPanel.add(new JLabel("Green"), gbc);
 
-    gbc.gridx = 1;
+    gbc.gridx = 2;
     gbc.gridy = 2;
     contentPanel.add(greenField, gbc);
 
-    gbc.gridx = 2;
+    gbc.gridx = 3;
     gbc.gridy = 2;
     contentPanel.add(new JLabel(tileGreen), gbc);
     
     gbc.gridx = 4;
     gbc.gridy = 2;
-    rightPanel.add(new JLabel(""), gbc);
+    contentPanel.add(new JLabel(""), gbc);
     
     
-//    gbc.gridx = 
-
     gbc.gridx = 0;
+    gbc.gridy = 3;
+    contentPanel.add(new JLabel(""), gbc);
+
+    gbc.gridx = 1;
     gbc.gridy = 3;
     contentPanel.add(new JLabel("Blue"), gbc);
 
-    gbc.gridx = 1;
+    gbc.gridx = 2;
     gbc.gridy = 3;
     gbc.gridwidth = 1;
     contentPanel.add(blueField, gbc);
 
-    gbc.gridx = 2;
+    gbc.gridx = 3;
     gbc.gridy = 3;
     gbc.gridwidth = 1;
     contentPanel.add(new JLabel(tileBlue), gbc);
-
+    
+    gbc.gridx = 4;
+    gbc.gridy = 3;
+    contentPanel.add(new JLabel(""), gbc);
+    
     gbc.gridx = 0;
+    gbc.gridy = 4;
+    contentPanel.add(new JLabel(""), gbc);
+
+    gbc.gridx = 1;
     gbc.gridy = 4;
     gbc.gridwidth = 1;  // Span two columns
     contentPanel.add(okButton, gbc);
 
-    gbc.gridx = 1;
+    gbc.gridx = 2;
     gbc.gridy = 4;
     gbc.gridwidth = 1;
     contentPanel.add(new JLabel(""), gbc);
 
-    gbc.gridx = 2;
+    gbc.gridx = 3;
     gbc.gridy = 4;
     gbc.gridwidth = 1;  // Span two columns
     contentPanel.add(cancelButton, gbc);
+    
+    gbc.gridx = 4;
+    gbc.gridy = 4;
+    contentPanel.add(new JLabel(""), gbc);
 
-    /*
-    contentPanel.add(new JLabel("Red"));
-    contentPanel.add(redField);
-    contentPanel.add(new JLabel("Green"));
-    contentPanel.add(greenField);
-    contentPanel.add(new JLabel("Blue"));
-    contentPanel.add(blueField);
-    contentPanel.add(new JLabel()); // Spacer
-    contentPanel.add(okButton);
-    contentPanel.add(cancelButton);
-     */
     // Add listeners
     okButton.addActionListener(e -> {
       try {
