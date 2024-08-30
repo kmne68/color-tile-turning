@@ -117,13 +117,8 @@ public class Game {
   //  }
     System.out.println("OUTSIDE WHILE");
     grid.setTileColor(row, col, newColor);
-    
-    //  selectedRow = -1;
-    //  selectedCol = -1;
 
 // Check if tile is locked after color change
-// TODO: PREVENT POINT AWARD FROM ENABLING ENDLESS WHILE -- happens only with player 1
-// TODO: FIX PLAYER SWITCH AFTER TURN ENDS
 // TODO: FIGURE OUT HOW TO DEAL WITH ADDITIONAL POINTS
     if (newColor.equals(currentPlayer.getTargetColor())) {
       grid.getTile(row, col).setLocked(true);

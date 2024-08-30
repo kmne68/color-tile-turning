@@ -194,6 +194,7 @@ public class ColorDialog extends JDialog {
         game.changeTileColor(selectedRow, selectedCol, newColor);
         gamePanel.repaint();
         game.switchPlayer();
+        
         setVisible(false);
       } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this, "Invalid input. Please enter numbers.");;
