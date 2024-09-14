@@ -50,9 +50,9 @@ public class GamePanel extends JPanel {
             ColorDialog colorDialog = new ColorDialog((JFrame) topFrame, game, selectedRow, selectedCol, GamePanel.this);
             colorDialog.setVisible(true);
             
-            Color newColor = colorDialog.getColor();
-            if(newColor != null) {
-              game.changeTileColor(selectedRow, selectedCol, newColor);
+            Color originalColorOfSelectedTile = colorDialog.getColor();
+            if(originalColorOfSelectedTile != null) {
+              game.changeTileColor(selectedRow, selectedCol, originalColorOfSelectedTile);
               repaint();
             }
           }

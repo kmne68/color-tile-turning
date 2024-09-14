@@ -18,6 +18,7 @@ public class Player {
   private int score;
   private Color targetColor;
   private int remainingPoints;
+  private int playerInputRed, playerInputGreen, playerInputBlue;
 
   public Player(String name, Color targetColor) {
     this.name = name;
@@ -58,6 +59,30 @@ public class Player {
   
   public void subtractPoints(int points) {
     remainingPoints -= points;
+  }
+
+  public int getPlayerInputRed() {
+    return playerInputRed;
+  }
+
+  public void setPlayerInputRed(int playerInputRed) {
+    this.playerInputRed = playerInputRed;
+  }
+
+  public int getPlayerInputGreen() {
+    return playerInputGreen;
+  }
+
+  public void setPlayerInputGreen(int playerInputGreen) {
+    this.playerInputGreen = playerInputGreen;
+  }
+
+  public int getPlayerInputBlue() {
+    return playerInputBlue;
+  }
+
+  public void setPlayerInputBlue(int playerInputBlue) {
+    this.playerInputBlue = playerInputBlue;
   }
   
   

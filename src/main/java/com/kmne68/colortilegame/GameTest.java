@@ -18,11 +18,11 @@ public class GameTest {
     
     gui.setVisible(true);
 
-    while (!game.checkWinCondition()) {
-      System.out.println("Current player: " + game.getCurrentPlayer().getName());
+  //  while (!game.checkWinCondition()) {
+  //    System.out.println("Current player: " + game.getCurrentPlayer().getName());
 
-      game.printGrid();
+  //    game.printGrid();
     //  game.switchPlayer2();
-    } 
+  //  } 
   }
 }

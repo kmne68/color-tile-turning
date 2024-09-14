@@ -45,6 +45,18 @@ public class Tile {
   public void setLocked(boolean lockStatus) {
     isLocked = lockStatus;
   }
+
+  public int getRed() {
+    return red;
+  }
+
+  public int getGreen() {
+    return green;
+  }
+
+  public int getBlue() {
+    return blue;
+  }
   
   
   public void setSelected(boolean isSelected) {

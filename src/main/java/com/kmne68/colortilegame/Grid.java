@@ -15,7 +15,7 @@ public class Grid {
   private Tile[][] tiles;
   private int numRows;
   private int numCols;
-  private int red, green, blue;
+  private int tileRed, tileGreen, tileBlue;
   
   public Grid(int numRows, int numCols) {
     this.numRows = numRows;
@@ -61,27 +61,27 @@ public class Grid {
   }
 
   public int getRed() {
-    return red;
+    return tileRed;
   }
 
   public void setRed(int red) {
-    this.red = red;
+    this.tileRed = red;
   }
 
   public int getGreen() {
-    return green;
+    return tileGreen;
   }
 
   public void setGreen(int green) {
-    this.green = green;
+    this.tileGreen = green;
   }
 
   public int getBlue() {
-    return blue;
+    return tileBlue;
   }
 
   public void setBlue(int blue) {
-    this.blue = blue;
+    this.tileBlue = blue;
   }
   
   
