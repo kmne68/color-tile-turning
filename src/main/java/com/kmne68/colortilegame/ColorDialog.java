@@ -177,8 +177,10 @@ public class ColorDialog extends JDialog {
 
     // Add listeners
     okButton.addActionListener(e -> {
-      try {
-        int userRedInput = Integer.parseInt(playerInputRed.getText());
+      try {  
+        int userRedInput = Integer.parseInt(playerInputRed.getText()) > 0 ? Integer.parseInt(playerInputRed.getText()) : Integer.parseInt(tileRed);
+
+      //  int userRedInput = Integer.parseInt(playerInputRed.getText());
         int userGreenInput = Integer.parseInt(playerInputGreen.getText());
         int userBlueInput = Integer.parseInt(playerInputBlue.getText());
 

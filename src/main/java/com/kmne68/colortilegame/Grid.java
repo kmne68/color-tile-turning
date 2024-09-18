@@ -84,6 +84,4 @@ public class Grid {
     this.tileBlue = blue;
   }
   
-  
-  
 }

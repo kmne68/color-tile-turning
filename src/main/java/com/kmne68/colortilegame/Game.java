@@ -51,9 +51,12 @@ public class Game {
     System.out.println("TILE RED: " + grid.getTileColor(row, col).getRed());
     System.out.println("TILE GREEN: " + grid.getTileColor(row, col).getGreen());
     System.out.println("TILE BLUE: " + grid.getTileColor(row, col).getBlue());
-    red = grid.getTile(row, col).getRed();
-    green = grid.getTile(row, col).getGreen();
-    blue = grid.getTile(row, col).getBlue();
+    red = grid.getTileColor(row, col).getRed();
+    green = grid.getTileColor(row, col).getGreen();
+    blue = grid.getTileColor(row, col).getBlue();
+    System.out.println("red: " + red);
+    System.out.println("green: " + green);
+    System.out.println("blue: " + blue);
     //  int redDiff = Math.abs(grid.getTileColor(row, col).getRed() - newColor.getRed());
     //  int greenDiff = Math.abs(grid.getTileColor(row, col).getGreen() - newColor.getGreen());
     //  int blueDiff = Math.abs(grid.getTileColor(row, col).getBlue() - newColor.getBlue());
@@ -73,17 +76,28 @@ public class Game {
       System.out.println("WHILE TILE RED: " + grid.getTileColor(row, col).getRed());
       System.out.println("WHILE TILE GREEN: " + grid.getTileColor(row, col).getGreen());
       System.out.println("WHILE TILE BLUE: " + grid.getTileColor(row, col).getBlue());
-      int redDiff = Math.abs(grid.getTileColor(row, col).getRed() - originalColorOfSelectedTile.getRed());
-      int greenDiff = Math.abs(grid.getTileColor(row, col).getGreen() - originalColorOfSelectedTile.getGreen());
-      int blueDiff = Math.abs(grid.getTileColor(row, col).getBlue() - originalColorOfSelectedTile.getBlue());
+      System.out.println("ORIGINAL COLOR OF SELECTED TILE RED: " + originalColorOfSelectedTile.getRed());
+      System.out.println("ORIGINAL COLOR OF SELECTED TILE GREEN: " + originalColorOfSelectedTile.getGreen());
+      System.out.println("ORIGINAL COLOR OF SELECTED TILE BLUE: " + originalColorOfSelectedTile.getBlue());
+      
+      // Calculate the difference between the original tile color and the player's value
+      int redDiff = Math.abs(grid.getTile(row, col).getRed() - currentPlayer.getPlayerInputRed());
+      int greenDiff = Math.abs(grid.getTile(row, col).getGreen() - currentPlayer.getPlayerInputGreen());
+      int blueDiff = Math.abs(grid.getTile(row, col).getBlue() - currentPlayer.getPlayerInputBlue());
+    //  int redDiff = Math.abs(grid.getTileColor(row, col).getRed() - originalColorOfSelectedTile.getRed());
+    //  int greenDiff = Math.abs(grid.getTileColor(row, col).getGreen() - originalColorOfSelectedTile.getGreen());
+    //  int blueDiff = Math.abs(grid.getTileColor(row, col).getBlue() - originalColorOfSelectedTile.getBlue());
 
-      if (currentPlayer.getRemainingPoints() >= redDiff) {
+      // Check whether the number of points remaining exceeds the difference 
+      // between the original red value and the new one.
+      if (currentPlayer.getRemainingPoints() > redDiff) {
         System.out.println("redDiff: " + redDiff);
         currentPlayer.subtractPoints(redDiff);
+        grid.getTile(row, col).setRed(currentPlayer.getPlayerInputRed());
         System.out.println("IN RED REMAINING POINTS: " + currentPlayer.getRemainingPoints());
       } else {
 
-        // reduce red by remaining points
+        // reduce RED by remaining points
         grid.getTile(row, col).setRed(red - currentPlayer.getRemainingPoints());
         // set remaining points to zero
         currentPlayer.subtractPoints(currentPlayer.getRemainingPoints());
@@ -91,12 +105,13 @@ public class Game {
         System.out.println("ELSE RED REMAINING POINTS: " + currentPlayer.getRemainingPoints());
         break;
       }
-      if (currentPlayer.getRemainingPoints() >= greenDiff) {
         System.out.println("greenDiff: " + greenDiff);
+      if (currentPlayer.getRemainingPoints() > greenDiff) {
         currentPlayer.subtractPoints(greenDiff);
+        grid.getTile(row, col).setGreen(currentPlayer.getPlayerInputGreen());
         System.out.println("IN GREEN REMAINING POINTS: " + currentPlayer.getRemainingPoints());
       } else {
-        // reduce green by remaining points
+        // reduce GREEN by remaining points
         // grid.setGreen(green - currentPlayer.getRemainingPoints());
         grid.getTile(row, col).setGreen(green - currentPlayer.getRemainingPoints());
         // set remaining points to zero
@@ -105,9 +120,10 @@ public class Game {
         System.out.println("ELSE GREEN REMAINING POINTS: " + currentPlayer.getRemainingPoints());
         break;
       }
-      if (currentPlayer.getRemainingPoints() >= blueDiff) {
+      if (currentPlayer.getRemainingPoints() > blueDiff) {
         System.out.println("blueDiff: " + blueDiff);
         currentPlayer.subtractPoints(blueDiff);
+        grid.getTile(row, col).setBlue(currentPlayer.getPlayerInputBlue());
         System.out.println("IN BLUE REMAINING POINTS: " + currentPlayer.getRemainingPoints());
       } else {
         // reduce blue by remaining points
@@ -120,10 +136,10 @@ public class Game {
     }
     System.out.println("OUTSIDE WHILE");
     System.out.println("REMAINING POINTS: " + currentPlayer.getRemainingPoints());
-    System.out.println("GRID.GETRED: "  + grid.getTile(row, col).getRed());
-    System.out.println("GRID.GETGREEN: "  + grid.getTile(row, col).getGreen());
-    System.out.println("GRID.GETBLUE: "  + grid.getTile(row, col).getBlue());
-    newColor = new Color(grid.getRed(), grid.getGreen(), grid.getBlue());
+  //  System.out.println("GRID.GETRED: "  + grid.getTile(row, col).getRed());
+  //  System.out.println("GRID.GETGREEN: "  + grid.getTile(row, col).getGreen());
+  //  System.out.println("GRID.GETBLUE: "  + grid.getTile(row, col).getBlue());
+    newColor = new Color(grid.getTile(row, col).getRed(), grid.getTile(row, col).getGreen(), grid.getTile(row, col).getBlue());
     System.out.println("NEW COLOR: " + newColor);
     grid.setTileColor(row, col, newColor);
 
