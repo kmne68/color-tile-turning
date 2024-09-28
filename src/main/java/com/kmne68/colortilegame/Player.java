@@ -67,6 +67,7 @@ public class Player {
 
   public void setPlayerInputRed(int playerInputRed) {
     this.playerInputRed = playerInputRed;
+    System.out.println("PLAYER.setPlayerInputRed: " + playerInputRed);
   }
 
   public int getPlayerInputGreen() {
@@ -75,6 +76,7 @@ public class Player {
 
   public void setPlayerInputGreen(int playerInputGreen) {
     this.playerInputGreen = playerInputGreen;
+    System.out.println("PLAYER.setPlayerInputGreen: " + playerInputGreen);
   }
 
   public int getPlayerInputBlue() {
@@ -83,6 +85,7 @@ public class Player {
 
   public void setPlayerInputBlue(int playerInputBlue) {
     this.playerInputBlue = playerInputBlue;
+    System.out.println("PLAYER.setPlayerInputBlue: " + playerInputBlue);
   }
   
   

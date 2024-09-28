@@ -26,6 +26,7 @@ public class ColorDialog extends JDialog {
   private JTextField playerInputRed, playerInputGreen, playerInputBlue;
   private JButton okButton, cancelButton;
   private Color newColor;
+  private Color originalColor;
   private GamePanel gamePanel;
   private Game game;
   private int selectedRow, selectedCol;
@@ -178,11 +179,16 @@ public class ColorDialog extends JDialog {
     // Add listeners
     okButton.addActionListener(e -> {
       try {  
-        int userRedInput = Integer.parseInt(playerInputRed.getText()) > 0 ? Integer.parseInt(playerInputRed.getText()) : Integer.parseInt(tileRed);
+        int userRedInput = Integer.parseInt(playerInputRed.getText()) >= 0 ? Integer.parseInt(playerInputRed.getText()) : Integer.parseInt(tileRed);
+        int userGreenInput = Integer.parseInt(playerInputGreen.getText()) >= 0 ? Integer.parseInt(playerInputGreen.getText()) : Integer.parseInt(tileGreen);
+        int userBlueInput = Integer.parseInt(playerInputBlue.getText()) >= 0 ? Integer.parseInt(playerInputBlue.getText()) : Integer.parseInt(tileBlue);
 
+        System.out.println("USER_RED_INPUT: " + userRedInput);
+        System.out.println("USER_GREEN_INPUT: " + userGreenInput);
+        System.out.println("USER_BLUE_INPUT: " + userBlueInput);
       //  int userRedInput = Integer.parseInt(playerInputRed.getText());
-        int userGreenInput = Integer.parseInt(playerInputGreen.getText());
-        int userBlueInput = Integer.parseInt(playerInputBlue.getText());
+      //  int userGreenInput = Integer.parseInt(playerInputGreen.getText());
+      //  int userBlueInput = Integer.parseInt(playerInputBlue.getText());
 
         player.setPlayerInputRed(userRedInput);
         player.setPlayerInputGreen(userGreenInput);
@@ -195,10 +201,12 @@ public class ColorDialog extends JDialog {
           JOptionPane.showMessageDialog(this, "Invalid color values. Please enter values between 0 and 255");
           return;
         }
-        System.out.println("RED: " + userRedInput + " Green: " + userGreenInput + " Blue: " + userBlueInput);
+        System.out.println("FROM COLOR DIALOG.JAVA Red: " + userRedInput + " Green: " + userGreenInput + " Blue: " + userBlueInput);
         newColor = new Color(userRedInput, userGreenInput, userBlueInput);
-        System.out.println("NEW COLOR: " + newColor);
-        game.changeTileColor(selectedRow, selectedCol, newColor);
+        originalColor = new Color(Integer.parseInt(tileRed), Integer.parseInt(tileGreen), Integer.parseInt(tileBlue));
+        System.out.println("FROM COLORDIALOG.JAVA NEW COLOR: " + newColor);
+      //  game.changeTileColor(selectedRow, selectedCol, newColor);
+        game.changeTileColor(selectedRow, selectedCol, originalColor);
         gamePanel.repaint();
         game.switchPlayer();
 

@@ -81,9 +81,13 @@ public class Game {
       System.out.println("ORIGINAL COLOR OF SELECTED TILE BLUE: " + originalColorOfSelectedTile.getBlue());
       
       // Calculate the difference between the original tile color and the player's value
-      int redDiff = Math.abs(grid.getTile(row, col).getRed() - currentPlayer.getPlayerInputRed());
-      int greenDiff = Math.abs(grid.getTile(row, col).getGreen() - currentPlayer.getPlayerInputGreen());
-      int blueDiff = Math.abs(grid.getTile(row, col).getBlue() - currentPlayer.getPlayerInputBlue());
+      int redDiff = Math.abs(originalColorOfSelectedTile.getRed() - currentPlayer.getPlayerInputRed());
+      int greenDiff = Math.abs(originalColorOfSelectedTile.getGreen() - currentPlayer.getPlayerInputGreen());
+      int blueDiff = Math.abs(originalColorOfSelectedTile.getBlue() - currentPlayer.getPlayerInputBlue());
+      System.out.println("REDDIFF CALCULATION: " + "originalColorOfSelectedTile.getRed " + originalColorOfSelectedTile.getRed() + " - " + "playerInputRed " + currentPlayer.getPlayerInputRed() + " = " + redDiff );
+      System.out.println("REDDIFF CALCULATION: " + "grid.getTile.getGreen " + originalColorOfSelectedTile.getGreen() + " - " + "playerInputGreen " + currentPlayer.getPlayerInputGreen() + " = " + greenDiff );
+      System.out.println("REDDIFF CALCULATION: " + "grid.getTile.getGlue " + originalColorOfSelectedTile.getBlue() + " - " + "playerInputBlue " + currentPlayer.getPlayerInputBlue() + " = " + blueDiff );
+
     //  int redDiff = Math.abs(grid.getTileColor(row, col).getRed() - originalColorOfSelectedTile.getRed());
     //  int greenDiff = Math.abs(grid.getTileColor(row, col).getGreen() - originalColorOfSelectedTile.getGreen());
     //  int blueDiff = Math.abs(grid.getTileColor(row, col).getBlue() - originalColorOfSelectedTile.getBlue());
@@ -103,6 +107,7 @@ public class Game {
         currentPlayer.subtractPoints(currentPlayer.getRemainingPoints());
 
         System.out.println("ELSE RED REMAINING POINTS: " + currentPlayer.getRemainingPoints());
+        System.out.println("IN RED TILE RED: " + grid.getTile(row, col).getRed());
         break;
       }
         System.out.println("greenDiff: " + greenDiff);
@@ -118,6 +123,7 @@ public class Game {
         currentPlayer.subtractPoints(currentPlayer.getRemainingPoints());
 
         System.out.println("ELSE GREEN REMAINING POINTS: " + currentPlayer.getRemainingPoints());
+        System.out.println("IN GREEN TILE GREEN: " + grid.getTile(row, col).getGreen());
         break;
       }
       if (currentPlayer.getRemainingPoints() > blueDiff) {
@@ -131,6 +137,7 @@ public class Game {
         // set remaining points to zero
         currentPlayer.subtractPoints(currentPlayer.getRemainingPoints());
         System.out.println("ELSE BLUE REMAINING POINTS: " + currentPlayer.getRemainingPoints());
+        System.out.println("IN BLUE TILE BLUE: " + grid.getTile(row, col).getBlue());
         break;
       }
     }
