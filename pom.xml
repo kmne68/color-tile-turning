@@ -11,4 +11,5 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <exec.mainClass>com.kmne68.colortilegame.ColorTileGame</exec.mainClass>
     </properties>
+    <name>ColorTileTurning</name>
 </project>
