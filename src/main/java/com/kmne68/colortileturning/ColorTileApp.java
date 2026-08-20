@@ -1,110 +1,70 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.kmne68.colortileturning;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.geometry.Insets;
+import javafx.scene.paint.Color;
 
-/**
- *
- * @author kmne6
- */
-public class Main extends Application {
-  
-  private Game game;
-  private GridPane gridPane;
-  private Label statusLabel;
-  
-  @Override
-   public void start(Stage primaryStage) {
-        game = new Game(5, 5, 12); // 5x5 grid, 12 rounds
-        gridPane = new GridPane();
-        statusLabel = new Label("Player " + (game.getCurrentPlayer()
-                .getTargetRGB()[0] == 0 ? "1" : "2") + ": " + 
-                game.getCurrentPlayer().getPoints() + " points");
+public class ColorTileApp extends Application {
+    private GameController controller;
+    private Game game;
 
-        // Create colored buttons
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                Tile tile = game.getBoard().getTile(i, j);
-                Button button = createTileButton(i, j, tile);
-                gridPane.add(button, j, i);
-            }
-        }
+    @Override
+    public void start(Stage primaryStage) {
+        game = new Game(5, 5, 10);  // Your model init - adjust size
+        controller = new GameController(game, this);
 
-        VBox root = new VBox(10, statusLabel, gridPane);
-        Scene scene = new Scene(root, 400, 450);
-        primaryStage.setTitle("Color Tile Turning");
+        BorderPane root = new BorderPane();
+
+        // Top
+        MenuBar menuBar = createMenuBar();
+        HBox toolbar = createToolbar();
+        VBox top = new VBox(menuBar, toolbar);
+        top.setStyle("-fx-background-color: #222;");
+        root.setTop(top);
+
+        // Center Board
+        GridPane boardGrid = controller.createBoardGrid();
+        boardGrid.setPadding(new Insets(20));
+        root.setCenter(boardGrid);
+
+        // Left Player 1
+        PlayerPanel p1Panel = new PlayerPanel(game.getPlayer1(), true, controller);
+        p1Panel.setMinWidth(280);
+        p1Panel.setPrefWidth(280);
+        p1Panel.setStyle("-fx-background-color: #1e3a5f; -fx-border-color: #4a90e2; -fx-border-width: 3;");
+        root.setLeft(p1Panel);
+
+        // Right Player 2
+        PlayerPanel p2Panel = new PlayerPanel(game.getPlayer2(), false, controller);
+        p2Panel.setMinWidth(280);
+        p2Panel.setPrefWidth(280);
+        p2Panel.setStyle("-fx-background-color: #5f1e1e; -fx-border-color: #e24a4a; -fx-border-width: 3;");
+        root.setRight(p2Panel);
+
+        // Bottom Status
+        // TO DO: make the label content dyamic
+        Label status = new Label("Player 1's Turn | Points: 255 | Select tile");
+        status.setPadding(new Insets(10));
+        status.setStyle("-fx-background-color: #333; -fx-text-fill: white;");
+        root.setBottom(status);
+
+        controller.setPanels(p1Panel, p2Panel);
+
+        Scene scene = new Scene(root, 1350, 850);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Color Tile Turning");
         primaryStage.show();
+
+        controller.refreshUI();  // Force update
     }
-  
-  
-  private Button createTileButton(int row, int col, Tile tile) {
-    int[] rgb = tile.getRGB();
-    Button button = new Button();
-    button.setStyle("-fx-background-color: rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ");");
-    button.setPrefSize(80, 80);
-    if (!tile.isLocked()) {
-      button.setOnAction(e -> openRGBDialog(row, col, tile));
-    }
-    return button;
-  }
-  
-  
-  private void openRGBDialog(int row, int col, Tile tile) {
-    Player currentPlayer = game.getCurrentPlayer();
-    Stage dialog = new Stage();
-    dialog.initModality(Modality.APPLICATION_MODAL);
-    dialog.setTitle("Adjust RGB");
-    
-    TextField rField = new TextField("0");
-    TextField gField = new TextField("0");
-    TextField bField = new TextField("0");
-    Button submit = new Button("Apply");
-    submit.setOnAction(e -> {
-      try {
-        int rDelta = Integer.parseInt(rField.getText());
-        int gDelta = Integer.parseInt(gField.getText());
-        int bDelta = Integer.parseInt(bField.getText());
-        currentPlayer.spendPoints(tile, rDelta, gDelta, bDelta);
-        updateGrid();
-        statusLabel.setText("Player " + (game.getCurrentPlayer().getTargetRGB()[0] == 0 ? "1" : "2") + ": " + currentPlayer.getPoints() + " points");
-        game.nextTurn();
-        dialog.close();
-      } catch (NumberFormatException ex) {
-        
-      }
-    });
-  
-  
-    VBox dialogPane = new VBox(10, new Label("R Delta:"), rField, new Label("G Delta:"), gField, new Label("B Delta:"), bField, submit);
-    Scene dialogScene = new Scene(dialogPane, 200, 350);
-    dialog.setScene(dialogScene);
-    dialog.showAndWait();
-  }
-  
-  
-  private void updateGrid() {
-    gridPane.getChildren().clear();
-    for(int i = 0; i < 5; i++) {
-      for(int j = 0; j < 5; j++) {
-        Tile tile = game.getBoard().getTile(i, j);
-        gridPane.add(createTileButton(i, j, tile), j, i);
-      }
-    }
-  }
-  public static void main(String[] args) {
-    launch(args);
-  }
+
+    // (Keep your createMenuBar and createToolbar methods here - unchanged)
+    private MenuBar createMenuBar() { /* your code */ return new MenuBar(); }
+    private HBox createToolbar() { /* your code */ return new HBox(); }
+
+    public static void main(String[] args) { launch(args); }
 }
