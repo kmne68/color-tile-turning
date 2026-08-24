@@ -145,4 +145,8 @@ private void refreshBoard() {
         // Rebuild UI via app if needed
         refreshUI();
     }
+
+    public Tile getSelectedTile() {
+        return this.selectedTile;
+    }
 }

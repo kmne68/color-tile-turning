@@ -5,6 +5,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
 public class PlayerPanel extends VBox {
     private final Player player;
@@ -60,16 +61,41 @@ public class PlayerPanel extends VBox {
         selectedBox.getChildren().add(selectedTileLabel);
         selectedBox.getChildren().add(tilePreview);
 
+        selectedTileRed();
+
         // RGB Deltas
-        HBox deltas = new HBox(8);
-        deltaRField = new TextField("0"); deltaRField.setPrefWidth(70);
-        deltaGField = new TextField("0"); deltaGField.setPrefWidth(70);
-        deltaBField = new TextField("0"); deltaBField.setPrefWidth(70);
-        deltas.getChildren().addAll(
-            new Label("ΔR:"), deltaRField,
-            new Label("ΔG:"), deltaGField,
-            new Label("ΔB:"), deltaBField
-        );
+        HBox deltas = new HBox(12);
+        deltas.setAlignment(Pos.CENTER);
+
+        // Red Column
+        VBox redBox = new VBox(4);
+        redBox.setAlignment(Pos.CENTER);
+        Label redLabel = new Label("R: ");
+        redLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: red;");
+        deltaRField = new TextField("0");
+        deltaRField.setPrefWidth(70);
+        redBox.getChildren().addAll(redLabel, deltaRField);
+
+        // Green Column
+        VBox greenBox = new VBox(4);
+        greenBox.setAlignment(Pos.CENTER);
+        Label greenLabel = new Label("G:");
+        greenLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: green;");
+        deltaGField = new TextField("0");
+        deltaGField.setPrefWidth(70);
+        greenBox.getChildren().addAll(greenLabel, deltaGField);
+
+        // Blue Column
+        VBox blueBox = new VBox(4);
+        blueBox.setAlignment(Pos.CENTER);
+        Label blueLabel = new Label("B:");
+        blueLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: blue");
+        deltaBField = new TextField("0");
+        deltaBField.setPrefWidth(70);
+        blueBox.getChildren().addAll(blueLabel, deltaBField);
+
+        deltas.getChildren().addAll(redBox, greenBox, blueBox);
+
         selectedBox.getChildren().add(deltas);
 
         applyButton = new Button("Apply Changes");
@@ -78,6 +104,8 @@ public class PlayerPanel extends VBox {
         costPreviewLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
         selectedBox.getChildren().addAll(applyButton, costPreviewLabel);
         getChildren().add(selectedBox);
+
+
     }
 
     private void applyChanges() {
@@ -100,6 +128,12 @@ public class PlayerPanel extends VBox {
 
     public void setTurnActive(boolean active) {
         turnLabel.setText(active ? "YOUR TURN" : "Opponent's Turn");
+    }
+
+    public Tile selectedTileRed() {
+        Tile tile = controller.getSelectedTile();
+        System.out.print("OK");
+        return tile;
     }
 
     public void updateTilePreview(int r, int g, int b) {
