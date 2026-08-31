@@ -12,10 +12,12 @@ public class GameController {
     private PlayerPanel p1Panel, p2Panel;
     private Tile selectedTile;
     private GridPane boardGrid;
+    private Label statusBar;
 
-    public GameController(Game game, ColorTileApp app) {
+    public GameController(Game game, ColorTileApp app, Label statusBar) {
         this.game = game;
         this.app = app;
+        this.statusBar = statusBar;
     }
 
     public void setPanels(PlayerPanel p1, PlayerPanel p2) {
@@ -46,7 +48,7 @@ public class GameController {
         rect.setFill(Color.rgb(tile.getR(), tile.getG(), tile.getB()));
         pane.getChildren().add(rect);
 
-        System.out.println("Tile clicked");
+        // System.out.println("Tile clicked");
         // Optional: add text for RGB values
         return pane;
     }
@@ -66,9 +68,14 @@ public class GameController {
     public void applyRGBChanges(Player player, int dr, int dg, int db) {
 
         System.out.println("Apply RGB changes called with " + dr + ", " + dg + ", " + db);
-
         
-        if (selectedTile == null || !game.isPlayerTurn(player)) return;
+        if (selectedTile == null || !game.isPlayerTurn(player)) {
+            System.out.println("selectedTile = " + selectedTile);
+            System.out.println("panel player = " + player);
+            System.out.println("current player = " + game.getCurrentPlayer());
+            System.out.println("isPlayerTurn = " + game.isPlayerTurn(player));
+        return;
+        }
 
         System.out.println("Applying RGB changes: " + dr + ", " + dg + ", " + db);
 
@@ -90,16 +97,28 @@ public class GameController {
         System.out.println("New RGB: " + newR + ", " + newG + ", " + newB);
 
         selectedTile.setRGB(newR, newG, newB);
-        player.spendPoints(cost);
+
+        System.out.println("JUST BEFORE player.spendPoints(cost) is called");       
+
+        player.spendPoints(selectedTile, dr, dg, db); //  cost);   // THIS HAS TO BE GETTING CALLED BECAUSE THE NEXT LINE EXECUTES
+
+        System.out.println("Points after spend: " + player.getPointsAvailable());
+
+        if (player.getPointsAvailable() <= 0) {
+            System.out.println("Calling endTurn()");   // WE'RE MAKING IT TO HERE BUT NOT CALLING TILE.ADJUSTRGB or PLAYER.SPENDPOINTS
+            endTurn();
+        }
 
         game.checkCapture(selectedTile, player);  // Implement in Game/Board if not present
 
         refreshBoard();
         refreshPanels();
         
+        /*
         if (player.getPointsAvailable() <= 0) {
             endTurn();
         }
+        */
     }
 
     private int clamp(int val, int min, int max) {
@@ -107,12 +126,14 @@ public class GameController {
     }
 
     public void endTurn() {
-        game.switchTurn();
-        Player next = game.getCurrentPlayer();
-        int bonus = game.calculateContiguousBonus(next);  // Implement adjacency
-        next.addPoints(255 + next.getCapturedTiles() + bonus);
+        // game.switchTurn();
+        game.nextTurn();
+        // Player next = game.getCurrentPlayer();
+        // int bonus = game.calculateContiguousBonus(next);  // Implement adjacency
+        // next.addPoints(255 + next.getCapturedTiles() + bonus);
         refreshPanels();
-        // Check win
+        refreshStatus();
+         // Check win
     }
 
 private void refreshBoard() {
@@ -140,13 +161,36 @@ private void refreshBoard() {
         if (p2Panel != null) p2Panel.updateStats(game.getPlayer2().getScore(), game.getPlayer2().getCapturedTiles(), game.getPlayer2().getPointsAvailable());
     }
 
+    public void refreshStatus() {
+        String name = game.getCurrentPlayer().isPlayer1() ? "Player 1" : "Player 2";
+        int points = game.getCurrentPlayer().getPointsAvailable();
+        updateStatus(name + "'s Turn | Points: " + game.getCurrentPlayer().getPointsAvailable() + " | Select a tile");
+    }
+
     public void startNewGame(int rows, int columns, int rounds) {
+        refreshStatus();    
         game = new Game(rows, columns, rounds);
         // Rebuild UI via app if needed
         refreshUI();
     }
 
+    public void beginFirstTurn() {
+        Player p1 = game.getPlayer1();
+        int bonus = game.calculateContiguousBonus(p1);
+     //   p1.addPoints(p1.getPointsAvailable() + p1.getCapturedTiles() + bonus);
+        refreshPanels();
+        refreshStatus();
+    }
+
     public Tile getSelectedTile() {
         return this.selectedTile;
+    }
+
+
+
+    public void updateStatus(String message) {
+        if (statusBar != null) {
+            statusBar.setText(message);
+        }
     }
 }

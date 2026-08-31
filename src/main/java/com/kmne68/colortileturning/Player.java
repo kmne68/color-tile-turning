@@ -24,27 +24,41 @@ public class Player {
         System.out.println("Points: " + points);
     }
 
-    public void spendPoints(Tile tile, int rDelta, int gDelta, int bDelta) {
+    public String spendPoints(Tile tile, int rDelta, int gDelta, int bDelta) {
+      System.out.println("in spendPoints");
         int totalCost = rDelta + gDelta + bDelta;
         if (totalCost <= points && totalCost >= 0) {
             tile.adjustRGB(rDelta, gDelta, bDelta, isPlayer1);
             points -= totalCost;
+            System.out.println("spendPoints TILE IS LOCKED: " + tile.isLocked());
             if (tile.isLocked()) {
                 capturedTiles++;
             }
         }
+        return "STRAIGHT OUT OF spendPoints()";
     }
 
 
     public int getCapturedTiles() { return capturedTiles; }
+
+
     public int[] getTargetRGB() { return targetRGB; }
 
-    public String getName() { return "Player"; } // Or your field
+    public String getName() { 
+      if (isPlayer1)
+        return "Player 1 + test";
+      else {
+        return "Player 2";
+      }
+    } // Or your field
+
+
+
     public boolean isPlayer1() { 
     return isPlayer1;  // Return the field (boolean you added earlier)
 }
     public int getPointsAvailable() { return points; } // Your field
-    public void spendPoints(int amount) { points -= amount; if (points < 0) points = 0; }
+//    public void spendPoints(int amount) { points -= amount; if (points < 0) points = 0; }
     public void addPoints(int amount) { points += amount; }
 
     public int getScore() {
@@ -55,52 +69,3 @@ public class Player {
       this.isPlayer1 = isP1;
     }
 }
-
-
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-// package com.kmne68.colortileturning;
-
-/**
- *
- * @author kmne6
- */
-
-/*
-public class Player {
-  
-  private int points;
-  private int capturedTiles;
-  private final int[] targetRGB;
-  private final boolean isPlayer1;
-  
-  public Player(boolean isPlayer1) {
-    this.isPlayer1 = isPlayer1;
-    this.targetRGB = isPlayer1 ? new int[]{0, 0, 0} : new int[]{255, 255, 255};
-    this.capturedTiles = 0;
-  }
-  
-  public void startTurn(Board board) {
-    points = 500 + capturedTiles + board.calculateContiguousBonus(this);
-  }
-  
-  public void spendPoints(Tile tile, int redDelta, int greenDelta, int blueDelta) {
-    int totalCost = redDelta + greenDelta + blueDelta;
-    if(totalCost <= points && totalCost >= 0) {
-      tile.adjustRGB(redDelta, greenDelta, blueDelta, isPlayer1);
-      points -= totalCost;
-      if(tile.isLocked())
-        capturedTiles++;
-    }
-  }
-  
-  public int getPoints() { return points; }
-  public int getCapturedTiles() { return capturedTiles; }
-  public int[] getTargetRGB() { return targetRGB; }
-  public boolean getIsPlayer1() { return isPlayer1; }
-}
-
-*/

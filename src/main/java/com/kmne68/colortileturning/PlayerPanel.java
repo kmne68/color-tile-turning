@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import java.util.*;
 
 public class PlayerPanel extends VBox {
     private final Player player;
@@ -17,6 +18,13 @@ public class PlayerPanel extends VBox {
     private TextField deltaRField, deltaGField, deltaBField;
     private Button applyButton;
     private Label costPreviewLabel;
+    private TextField currentRField;
+    private TextField currentGField;
+    private TextField currentBField;
+    private TextField rDiffFromTarget;
+    private TextField gDiffFromTarget;
+    private TextField bDiffFromTarget;
+    private TextField tempTotal;
 
     public PlayerPanel(Player player, boolean isPlayer1, GameController controller) {
         this.player = player;
@@ -61,11 +69,25 @@ public class PlayerPanel extends VBox {
         selectedBox.getChildren().add(selectedTileLabel);
         selectedBox.getChildren().add(tilePreview);
 
-        selectedTileRed();
+        selectedTile();
 
         // RGB Deltas
         HBox deltas = new HBox(12);
         deltas.setAlignment(Pos.CENTER);
+
+        // Labels Column
+        VBox labelsBox = new VBox(4);
+        labelsBox.setAlignment(Pos.CENTER_LEFT);
+
+        Label spacer = new Label("");
+        Label deltaLabel = new Label("Delta");
+        deltaLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+        Label currentLabel = new Label("Selected");
+        currentLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+        Label targetLabel = new Label("To Target");
+        targetLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+
+        labelsBox.getChildren().addAll(spacer, deltaLabel, currentLabel, targetLabel);
 
         // Red Column
         VBox redBox = new VBox(4);
@@ -74,7 +96,15 @@ public class PlayerPanel extends VBox {
         redLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: red;");
         deltaRField = new TextField("0");
         deltaRField.setPrefWidth(70);
-        redBox.getChildren().addAll(redLabel, deltaRField);
+        currentRField = new TextField("-");
+        currentRField.setPrefWidth(70);
+        currentRField.setEditable(false);
+        currentRField.setFocusTraversable(false);
+        rDiffFromTarget = new TextField("-");
+        rDiffFromTarget.setPrefWidth(70);
+        rDiffFromTarget.setEditable(false);
+        rDiffFromTarget.setFocusTraversable(false);
+        redBox.getChildren().addAll(redLabel, deltaRField, currentRField, rDiffFromTarget);
 
         // Green Column
         VBox greenBox = new VBox(4);
@@ -83,7 +113,15 @@ public class PlayerPanel extends VBox {
         greenLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: green;");
         deltaGField = new TextField("0");
         deltaGField.setPrefWidth(70);
-        greenBox.getChildren().addAll(greenLabel, deltaGField);
+        currentGField = new TextField("-");
+        currentGField.setPrefWidth(70);
+        currentGField.setEditable(false);
+        currentGField.setFocusTraversable(false);
+        gDiffFromTarget = new TextField("-");
+        gDiffFromTarget.setPrefWidth(70);
+        gDiffFromTarget.setEditable(false);
+        gDiffFromTarget.setFocusTraversable(false);        
+        greenBox.getChildren().addAll(greenLabel, deltaGField, currentGField, gDiffFromTarget);
 
         // Blue Column
         VBox blueBox = new VBox(4);
@@ -92,9 +130,55 @@ public class PlayerPanel extends VBox {
         blueLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: blue");
         deltaBField = new TextField("0");
         deltaBField.setPrefWidth(70);
-        blueBox.getChildren().addAll(blueLabel, deltaBField);
+        currentBField = new TextField("-");
+        currentBField.setPrefWidth(70);
+        currentBField.setEditable(false);
+        currentBField.setFocusTraversable(false);
+        bDiffFromTarget = new TextField("-");
+        bDiffFromTarget.setPrefWidth(70);
+        bDiffFromTarget.setEditable(false);
+        bDiffFromTarget.setFocusTraversable(false);
+        blueBox.getChildren().addAll(blueLabel, deltaBField, currentBField, bDiffFromTarget);
 
-        deltas.getChildren().addAll(redBox, greenBox, blueBox);
+        VBox totalVBox = new VBox(4);
+        totalVBox.setAlignment(Pos.CENTER);
+        Label totalLabel = new Label("Total");
+        totalLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow");
+        tempTotal = new TextField("255");
+        tempTotal.setPrefWidth(70);
+        tempTotal.setEditable(false);
+
+        totalVBox.getChildren().addAll(totalLabel, tempTotal);
+
+//        HBox totalHBox = new HBox(8, totalLabel, tempTotal);
+//        selectedBox.getChildren().add(totalHBox);
+
+        Runnable updateTotal = () -> {
+            try {
+                int dr = Math.abs(Integer.parseInt(deltaRField.getText()));
+                int dg = Math.abs(Integer.parseInt(deltaGField.getText()));
+                int db = Math.abs(Integer.parseInt(deltaBField.getText()));
+                int cost = dr + dg + db;
+
+                int available = player.getPointsAvailable();
+                int remaining = available - cost;
+
+                tempTotal.setText(String.valueOf(remaining));
+
+                if (remaining < 0) {
+                    tempTotal.setStyle("-fx-text-fill: red");
+                } else {
+                    tempTotal.setStyle("-fx-text-fill: black"); 
+                }
+            } catch (NumberFormatException ex) {
+                tempTotal.setText("?");
+            }
+        };
+
+        deltaRField.textProperty().addListener((obs, oldVal, newVal) -> updateTotal.run());
+        deltaGField.textProperty().addListener((obs, oldVal, newVal) -> updateTotal.run());
+        deltaBField.textProperty().addListener((obs, oldVal, newVal) -> updateTotal.run());
+        deltas.getChildren().addAll(labelsBox, redBox, greenBox, blueBox, totalVBox);
 
         selectedBox.getChildren().add(deltas);
 
@@ -114,6 +198,12 @@ public class PlayerPanel extends VBox {
             int dg = Integer.parseInt(deltaGField.getText());
             int db = Integer.parseInt(deltaBField.getText());
             controller.applyRGBChanges(player, dr, dg, db);
+            currentRField.setText("-");
+            currentGField.setText("-");
+            currentBField.setText("-");
+            deltaRField.setText(String.valueOf(0));
+            deltaGField.setText(String.valueOf(0));
+            deltaBField.setText(String.valueOf(0));
             System.out.println("Apply called with " + dr + ", " + dg + ", " + db);
         } catch (Exception ex) {
             // Optional: show alert "Invalid input"
@@ -130,7 +220,7 @@ public class PlayerPanel extends VBox {
         turnLabel.setText(active ? "YOUR TURN" : "Opponent's Turn");
     }
 
-    public Tile selectedTileRed() {
+    public Tile selectedTile() {
         Tile tile = controller.getSelectedTile();
         System.out.print("OK");
         return tile;
@@ -142,5 +232,13 @@ public class PlayerPanel extends VBox {
             Math.max(0, Math.min(255, g)),
             Math.max(0, Math.min(255, b))
         ));
+        // Display current RGB values
+        currentRField.setText(String.valueOf(r));
+        currentGField.setText(String.valueOf(g));
+        currentBField.setText(String.valueOf(b));
+
+        rDiffFromTarget.setText(String.valueOf(Math.abs(player.getTargetRGB()[0] - r)));
+        gDiffFromTarget.setText(String.valueOf(Math.abs(player.getTargetRGB()[0] - g)));
+        bDiffFromTarget.setText(String.valueOf(Math.abs(player.getTargetRGB()[0] - b)));
     }
 }
