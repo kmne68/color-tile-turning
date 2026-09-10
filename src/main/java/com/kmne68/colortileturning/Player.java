@@ -24,6 +24,7 @@ public class Player {
         System.out.println("Points: " + points);
     }
 
+/*
     public String spendPoints(Tile tile, int rDelta, int gDelta, int bDelta) {
       System.out.println("in spendPoints");
         int totalCost = rDelta + gDelta + bDelta;
@@ -37,7 +38,7 @@ public class Player {
         }
         return "STRAIGHT OUT OF spendPoints()";
     }
-
+*/
 
     public int getCapturedTiles() { return capturedTiles; }
 
@@ -58,7 +59,13 @@ public class Player {
     return isPlayer1;  // Return the field (boolean you added earlier)
 }
     public int getPointsAvailable() { return points; } // Your field
-//    public void spendPoints(int amount) { points -= amount; if (points < 0) points = 0; }
+    
+    public void spendPoints(int amount) {
+      points -= amount; 
+      if (points < 0) points = 0;
+    }
+    
+    
     public void addPoints(int amount) { points += amount; }
 
     public int getScore() {
@@ -67,5 +74,9 @@ public class Player {
 
     public void setAsPlayer1(boolean isP1) {
       this.isPlayer1 = isP1;
+    }
+
+    public void incrementCapturedTiles(int captured) {
+      this.capturedTiles += captured;
     }
 }

@@ -26,13 +26,14 @@ public class Tile {
             r = Math.max(0, Math.min(255, r + (isPlayer1 ? -rDelta : rDelta)));
             g = Math.max(0, Math.min(255, g + (isPlayer1 ? -gDelta : gDelta)));
             b = Math.max(0, Math.min(255, b + (isPlayer1 ? -bDelta : bDelta)));
-
+/*
             if ((isPlayer1 && r == 0 && g == 0 && b == 0) ||
                 (!isPlayer1 && r == 255 && g == 255 && b == 255)) {
                 locked = true;
                 System.out.println("LOCKED bottom: " + this.isLocked());
                 this.setTileOwner(isPlayer1 ? "P1" : "P2");
             }
+            */
         }
     }
 
@@ -55,5 +56,9 @@ public class Tile {
 
     public void setTileOwner(String tileOwner) {
       this.tileOwner = tileOwner;
+    }
+
+    public void setLocked(boolean isLocked) {
+      this.locked = isLocked;
     }
 }

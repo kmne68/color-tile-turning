@@ -32,7 +32,8 @@ public class Game {
      * Make a move for the current player.
      */
     public void makeMove(Tile tile, int rDelta, int gDelta, int bDelta) {
-        currentPlayer.spendPoints(tile, rDelta, gDelta, bDelta);
+        int cost = Math.abs(rDelta) + Math.abs(gDelta) + Math.abs(bDelta);
+        currentPlayer.spendPoints(cost);
     }
 
     public boolean isGameOver() {

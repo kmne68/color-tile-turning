@@ -55,11 +55,13 @@ public class GameController {
 
     public void onTileClicked(Tile tile) {
         this.selectedTile = tile;
+        boolean locked = tile.isLocked();
         Player active = game.getCurrentPlayer();
+
         if (active.isPlayer1() && p1Panel != null) {
-            p1Panel.updateTilePreview(tile.getR(), tile.getG(), tile.getB());
+            p1Panel.updateTilePreview(tile.getR(), tile.getG(), tile.getB(), locked);
         } else if (p2Panel != null) {
-            p2Panel.updateTilePreview(tile.getR(), tile.getG(), tile.getB());
+            p2Panel.updateTilePreview(tile.getR(), tile.getG(), tile.getB(), locked);
         }
         System.out.println("Selected tile: " + tile);
         // Update status if needed
@@ -98,9 +100,18 @@ public class GameController {
 
         selectedTile.setRGB(newR, newG, newB);
 
+        if ((player.isPlayer1() && newR == 0 && newG == 0 && newB == 0) ||
+            (!player.isPlayer1() && newR == 255 && newG == 255 && newB == 255)) {
+            selectedTile.setLocked(true);
+            player.incrementCapturedTiles(1);
+            System.out.println("LOCKED bottom: " + selectedTile.isLocked());
+            selectedTile.setTileOwner(player.isPlayer1() ? "P1" : "P2");
+        }
+
         System.out.println("JUST BEFORE player.spendPoints(cost) is called");       
 
-        player.spendPoints(selectedTile, dr, dg, db); //  cost);   // THIS HAS TO BE GETTING CALLED BECAUSE THE NEXT LINE EXECUTES
+        player.spendPoints(cost);
+        // player.spendPoints(selectedTile, dr, dg, db); //  cost);   // THIS HAS TO BE GETTING CALLED BECAUSE THE NEXT LINE EXECUTES
 
         System.out.println("Points after spend: " + player.getPointsAvailable());
 

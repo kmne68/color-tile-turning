@@ -18,6 +18,7 @@ public class PlayerPanel extends VBox {
     private TextField deltaRField, deltaGField, deltaBField;
     private Button applyButton;
     private Label costPreviewLabel;
+    private Label lockMessageLabel;
     private TextField currentRField;
     private TextField currentGField;
     private TextField currentBField;
@@ -25,6 +26,7 @@ public class PlayerPanel extends VBox {
     private TextField gDiffFromTarget;
     private TextField bDiffFromTarget;
     private TextField tempTotal;
+    private TextField totalRGB;
 
     public PlayerPanel(Player player, boolean isPlayer1, GameController controller) {
         this.player = player;
@@ -58,14 +60,22 @@ public class PlayerPanel extends VBox {
         turnLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
         getChildren().addAll(scoreLabel, capturedLabel, pointsLabel, turnLabel);
 
-        // Selected Tile Section
+        // Selected Tile Section       
         VBox selectedBox = new VBox(8);
+
+
         selectedBox.setPadding(new Insets(10));
         tilePreview = new Rectangle(120, 80);
         tilePreview.setFill(Color.WHITE);
 
         Label selectedTileLabel = new Label("Selected Tile");
         selectedTileLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow");
+        
+        lockMessageLabel = new Label("");
+        lockMessageLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: red");
+        lockMessageLabel.setVisible(false);
+        selectedBox.getChildren().add(lockMessageLabel);        
+        
         selectedBox.getChildren().add(selectedTileLabel);
         selectedBox.getChildren().add(tilePreview);
 
@@ -147,37 +157,19 @@ public class PlayerPanel extends VBox {
         tempTotal = new TextField("255");
         tempTotal.setPrefWidth(70);
         tempTotal.setEditable(false);
+        totalRGB = new TextField("255");
+        totalRGB.setPrefWidth(70);
+        totalRGB.setEditable(false);
+        totalRGB.setFocusTraversable(false);
 
-        totalVBox.getChildren().addAll(totalLabel, tempTotal);
+        totalVBox.getChildren().addAll(totalLabel, tempTotal, totalRGB);
 
 //        HBox totalHBox = new HBox(8, totalLabel, tempTotal);
 //        selectedBox.getChildren().add(totalHBox);
 
-        Runnable updateTotal = () -> {
-            try {
-                int dr = Math.abs(Integer.parseInt(deltaRField.getText()));
-                int dg = Math.abs(Integer.parseInt(deltaGField.getText()));
-                int db = Math.abs(Integer.parseInt(deltaBField.getText()));
-                int cost = dr + dg + db;
-
-                int available = player.getPointsAvailable();
-                int remaining = available - cost;
-
-                tempTotal.setText(String.valueOf(remaining));
-
-                if (remaining < 0) {
-                    tempTotal.setStyle("-fx-text-fill: red");
-                } else {
-                    tempTotal.setStyle("-fx-text-fill: black"); 
-                }
-            } catch (NumberFormatException ex) {
-                tempTotal.setText("?");
-            }
-        };
-
-        deltaRField.textProperty().addListener((obs, oldVal, newVal) -> updateTotal.run());
-        deltaGField.textProperty().addListener((obs, oldVal, newVal) -> updateTotal.run());
-        deltaBField.textProperty().addListener((obs, oldVal, newVal) -> updateTotal.run());
+        deltaRField.textProperty().addListener((obs, oldVal, newVal) -> updateRemainingPoints());
+        deltaGField.textProperty().addListener((obs, oldVal, newVal) -> updateRemainingPoints());
+        deltaBField.textProperty().addListener((obs, oldVal, newVal) -> updateRemainingPoints());
         deltas.getChildren().addAll(labelsBox, redBox, greenBox, blueBox, totalVBox);
 
         selectedBox.getChildren().add(deltas);
@@ -188,8 +180,24 @@ public class PlayerPanel extends VBox {
         costPreviewLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
         selectedBox.getChildren().addAll(applyButton, costPreviewLabel);
         getChildren().add(selectedBox);
+    }
 
+    private void updateRemainingPoints() {
+        try {
+            int dr = Math.abs(Integer.parseInt(deltaRField.getText()));
+            int dg = Math.abs(Integer.parseInt(deltaGField.getText()));
+            int db = Math.abs(Integer.parseInt(deltaBField.getText()));
+            int cost = dr + dg + db;
 
+            int remaining = player.getPointsAvailable() - cost;
+
+            tempTotal.setText(String.valueOf(remaining));
+            tempTotal.setStyle(remaining < 0 ? "-fx-text-fill: red" : "-fx-text-fill: black");
+            totalRGB.setText(String.valueOf(selectedTile().getR() + selectedTile().getG() + selectedTile().getB()));
+            totalRGB.setStyle("-fx-font-weight: bold; -fx-text-fill: black");
+        } catch (NumberFormatException ex) {
+            tempTotal.setText("?");
+        }
     }
 
     private void applyChanges() {
@@ -226,7 +234,7 @@ public class PlayerPanel extends VBox {
         return tile;
     }
 
-    public void updateTilePreview(int r, int g, int b) {
+    public void updateTilePreview(int r, int g, int b, boolean locked) {
         tilePreview.setFill(Color.rgb(
             Math.max(0, Math.min(255, r)),
             Math.max(0, Math.min(255, g)),
@@ -240,5 +248,23 @@ public class PlayerPanel extends VBox {
         rDiffFromTarget.setText(String.valueOf(Math.abs(player.getTargetRGB()[0] - r)));
         gDiffFromTarget.setText(String.valueOf(Math.abs(player.getTargetRGB()[0] - g)));
         bDiffFromTarget.setText(String.valueOf(Math.abs(player.getTargetRGB()[0] - b)));
+
+        if (locked) {
+            lockMessageLabel.setText("Selected tile is locked");
+            lockMessageLabel.setVisible(true);
+            setInputsEnabled(false);
+        } else {
+            lockMessageLabel.setText("");
+            lockMessageLabel.setVisible(false);
+            setInputsEnabled(true);
+        }
+        updateRemainingPoints();
+    }
+
+    private void setInputsEnabled(boolean enabled) {
+        deltaRField.setDisable(!enabled);
+        deltaGField.setDisable(!enabled);
+        deltaBField.setDisable(!enabled);
+        applyButton.setDisable(!enabled);
     }
 }
