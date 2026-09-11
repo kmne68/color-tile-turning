@@ -36,11 +36,28 @@ public class Board {
     /**
      * Calculates contiguous bonus for a player (orthogonal shared sides).
      */
-    public int calculateContiguousBonus(Player player) {
-        // TODO: Implement full contiguous bonus logic based on testing
-        // For now, return 0 as placeholder (we can refine after playtesting)
-        return 0;
+public int calculateContiguousBonus(Player player) {
+    String owner = player.isPlayer1() ? "P1" : "P2";
+    int bonus = 0;
+
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < cols; col++) {
+            Tile tile = grid[row][col];
+            if (tile == null || !owner.equals(tile.getTileOwner())) {
+                continue;
+            }
+            Tile right = getTile(row, col + 1);
+            Tile below = getTile(row + 1, col);
+            if (right != null && owner.equals(right.getTileOwner())) {
+                bonus++;
+            }
+            if (below != null && owner.equals(below.getTileOwner())) {
+                bonus++;
+            }
+        }
     }
+    return bonus;
+}
 
     public int getRows() { return rows; }
     public int getCols() { return cols; }
